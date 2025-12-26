@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qatar-Gate Research Platform</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0E12;--surface:#14181F;--elevated:#1A1F2E;--border:#2D3139;--text:#E8EAED;--text-dim:#9AA0A6;--accent:#D4A574;--success:#3FB950;--danger:#F85149}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+header{background:var(--surface);border-bottom:2px solid var(--accent);padding:2rem;margin-bottom:2rem}
+h1{font-size:2.5rem;color:var(--accent);margin-bottom:0.5rem}
+.subtitle{color:var(--text-dim);font-size:1.125rem}
+nav{background:var(--elevated);padding:1rem;border-radius:8px;margin-bottom:2rem;display:flex;gap:1rem;flex-wrap:wrap}
+nav button{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.75rem 1.5rem;border-radius:6px;cursor:pointer;font-size:0.9375rem;transition:all 0.2s}
+nav button:hover,nav button.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2rem;margin-bottom:2rem;display:none}
+.section.active{display:block}
+.section-title{font-size:1.75rem;color:var(--accent);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--border)}
+.essay{background:var(--elevated);border-left:4px solid var(--accent);padding:1.5rem;margin-bottom:2rem;border-radius:4px}
+.essay h3{color:var(--accent);margin-bottom:1rem;font-size:1.25rem}
+.essay p{color:var(--text-dim);line-height:1.8;margin-bottom:1rem}
+.essay strong{color:var(--text)}
+.expandable{margin:1.5rem 0}
+.expandable-header{background:var(--surface);border:1px solid var(--border);padding:1rem 1.5rem;cursor:pointer;border-radius:6px;display:flex;justify-content:space-between;align-items:center;transition:all 0.2s}
+.expandable-header:hover{border-color:var(--accent)}
+.expandable-header h4{color:var(--text);font-size:1.125rem}
+.expandable-arrow{color:var(--accent);font-size:1.25rem;transition:transform 0.2s}
+.expandable.open .expandable-arrow{transform:rotate(90deg)}
+.expandable-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.expandable.open .expandable-content{max-height:2000px;padding:1.5rem;background:var(--elevated);border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px}
+.timeline-item{border-left:3px solid var(--accent);padding-left:1.5rem;margin-bottom:2rem;position:relative}
+.timeline-item::before{content:'';position:absolute;left:-7px;top:0;width:11px;height:11px;background:var(--accent);border-radius:50%;border:2px solid var(--bg)}
+.timeline-date{color:var(--accent);font-weight:600;font-size:0.875rem;margin-bottom:0.5rem}
+.timeline-content h4{color:var(--text);margin-bottom:0.5rem}
+.timeline-content p{color:var(--text-dim);line-height:1.7}
+.research-card{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem}
+.research-card h4{color:var(--accent);margin-bottom:1rem}
+.research-card ul{margin-left:1.5rem;color:var(--text-dim)}
+.research-card li{margin-bottom:0.5rem;line-height:1.7}
+.article{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem}
+.article-title{color:var(--text);margin-bottom:0.5rem;font-size:1.125rem}
+.article-meta{color:var(--text-dim);font-size:0.875rem;margin-bottom:0.75rem}
+.article-desc{color:var(--text-dim);line-height:1.7;margin-bottom:1rem}
+.link-btn{display:inline-block;background:var(--accent);color:var(--bg);padding:0.5rem 1rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s}
+.link-btn:hover{background:var(--text);transform:translateX(4px)}
+.filters{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.filters select,.filters input{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.75rem 1rem;border-radius:6px;font-size:0.9375rem}
+.filters input{flex:1;min-width:250px}
+@media(max-width:768px){.container{padding:1rem}h1{font-size:2rem}nav{flex-direction:column}nav button{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<h1>Qatar-Gate: A Digital Historiography</h1>
+<p class="subtitle">How a WhatsApp message became consensus in 72 hours | Research platform for understanding information warfare in democratic media ecosystems</p>
+</header>
+
+<div class="container">
+<nav id="nav">
+<button class="active" onclick="showSection('overview')">Overview</button>
+<button onclick="showSection('why')">Why It Matters</button>
+<button onclick="showSection('timeline')">Timeline & Analysis</button>
+<button onclick="showSection('research')">Research Methods</button>
+<button onclick="showSection('sources')">Source Archive</button>
+</nav>
+
+<div id="overview" class="section active">
+<h2 class="section-title">What Happened: The 30-Second Version</h2>
+<div class="essay">
+<p>In April 2024, Israeli Prime Minister's media advisors—while secretly on Qatar's payroll—planted a false narrative in Israeli media: "Only Qatar can secure a hostage deal; Egypt is unreliable." Within 72 hours, this manufactured story achieved "consensus" status across Jewish diaspora media through a cascade effect: Hebrew broadcast → Israeli English media → JTA wire service → 50+ Jewish community papers → synagogue sermons → "common knowledge."</p>
+<p>In November 2024, Haaretz journalist Bar Peleg exposed the operation (codenamed "Project Lighthouse"). By March 2025, two Netanyahu aides were arrested. The scandal reveals how democratic media's trust infrastructure—the very thing that makes journalism credible—can be exploited for information warfare when sources are compromised.</p>
+</div>
+
+<h2 class="section-title">Core Mechanism: The Trust Cascade</h2>
+<div class="essay">
+<h3>How It Worked</h3>
+<p><strong>Stage 1 - The Plant (April 21, 03:07 AM):</strong> Eli Feldstein, employed as PMO spokesman but actually paid $11K/month by Qatar via US lobbyist Jay Footlik, calls Kan 11 reporter Suleiman Maswadeh. Reading from a script written by PR architect Yisrael Einhorn (also Qatar-funded), Feldstein poses as "senior Israeli official" and delivers the message: Qatar essential, Egypt unreliable.</p>
+<p><strong>Stage 2 - Hebrew Amplification (+12 hours):</strong> Ynet, Maariv, Times of Israel paraphrase Kan 11 story. Attribution degrades from "senior official in PMO told Kan 11" to "Israeli media reports."</p>
+<p><strong>Stage 3 - The Wire Service (+24 hours):</strong> JTA (Jewish Telegraphic Agency) picks up story, citing "Israeli media." This is the critical chokepoint—one wire story automatically feeds 50+ Jewish community papers that subscribe to JTA. No independent verification.</p>
+<p><strong>Stage 4 - Diaspora Echo (+48-72 hours):</strong> Forward, Tablet, Jewish Insider, Commentary all run versions. Attribution now completely erased: "according to reports" / "it is widely understood."</p>
+<p><strong>Stage 5 - The Rabbi Circuit (+7 days):</strong> Synagogue bulletins and sermons cite the story. Rabbis—trusted moral authorities, not journalists—reference "Qatar's essential role," creating second-order legitimacy. Community members hear it from both media AND religious leaders.</p>
+<p><strong>Result:</strong> Within one week, a fabricated WhatsApp message became unquestioned consensus across Jewish diaspora media and community discourse, influencing US policy debates about Middle East negotiations.</p>
+</div>
+</div>
+
+<div id="why" class="section">
+<h2 class="section-title">Why This Matters: Five Critical Dimensions</h2>
+
+<div class="expandable">
+<div class="expandable-header" onclick="toggleExpand(this)">
+<h4>1. Democratic Vulnerability: Trust as Attack Vector</h4>
+<span class="expandable-arrow">→</span>
+</div>
+<div class="expandable-content">
+<p><strong>The Paradox:</strong> Democratic media's greatest strength is its trust infrastructure. NYT trusts AP, local papers trust NYT, readers trust established outlets. This efficiency enables rapid information flow but creates systematic vulnerability when high-trust nodes are compromised.</p>
+<p><strong>What Qatar-Gate Reveals:</strong> Jewish diaspora media had institutional trust in Israeli sources. Assumption: "Israeli officials" = reliable. No verification needed. When Feldstein (paid by Qatar) became that "Israeli official," the entire trust network became an amplification mechanism for foreign propaganda.</p>
+<p><strong>The Mechanism:</strong> Not infiltration (hacking, forgery) but <em>credential exploitation</em>. Feldstein had legitimate PMO credentials. His calls to journalists were authentic. The deception wasn't in the method but in the undisclosed financial relationship.</p>
+<p><strong>Implications for Democracy:</strong> Traditional journalism ethics assume sources might lie about facts, not about who's paying them. Contractor status + foreign payments + official role = a configuration current media ethics can't detect. The trust cascade operates faster than verification systems can respond.</p>
+<p><strong>Why Previous Safeguards Failed:</strong> Feldstein wasn't a "fake news" website or bot network. He was actual PMO spokesman with real government email, calling journalists who knew him personally, from official phone numbers. Every verification journalists perform (confirm identity, check credentials, verify position) passed. The compromised element—foreign payment—was invisible to standard fact-checking.</p>
+</div>
+</div>
+
+<div class="expandable">
+<div class="expandable-header" onclick="toggleExpand(this)">
+<h4>2. Information Laundering: The Attribution Degradation Pattern</h4>
+<span class="expandable-arrow">→</span>
+</div>
+<div class="expandable-content">
+<p><strong>Definition:</strong> Like money laundering (dirty money → legitimate banks → clean money), information laundering moves propaganda through credible intermediaries to obscure origin.</p>
+<p><strong>The Qatar-Gate Pattern:</strong></p>
+<ul style="margin-left:2rem;color:var(--text-dim);margin-bottom:1rem">
+<li><strong>Original (April 21, 03:07 AM Hebrew):</strong> "גורם בכיר במשרד ראש הממשלה אמר לכאן 11" [Senior official in Prime Minister's Office told Kan 11]</li>
+<li><strong>+12 hours (Israeli English):</strong> "Senior Israeli official told Israeli media"</li>
+<li><strong>+24 hours (JTA wire):</strong> "Israeli media reports suggest"</li>
+<li><strong>+48 hours (diaspora):</strong> "According to reports from Israel"</li>
+<li><strong>+7 days (sermons):</strong> "It is widely understood that Qatar plays essential role"</li>
+</ul>
+<p><strong>Measurement:</strong> Track "specificity loss rate"—how fast attribution erodes at each transfer point. Qatar-Gate shows complete attribution disappearance in 5 stages over 7 days.</p>
+<p><strong>Why It Works:</strong> Each outlet trusts the previous outlet. "If Times of Israel reported it, it must be verified." But Times of Israel trusted Kan 11, and Kan 11 trusted "senior official" (Feldstein). Chain of trust, but original source was compromised.</p>
+<p><strong>The Linguistic Trick:</strong> "Reports suggest" is passive voice—who reports? Suggests to whom? This phrasing implies multiple independent sources ("reports" plural) when actually citing single contaminated source through multiple intermediaries.</p>
+<p><strong>Research Question:</strong> Is attribution degradation inevitable in wire service journalism, or is there a sustainable verification standard that maintains speed + accuracy?</p>
+</div>
+</div>
+
+<div class="expandable">
+<div class="expandable-header" onclick="toggleExpand(this)">
+<h4>3. The Contractor Loophole: When Private Actors Perform State Functions</h4>
+<span class="expandable-arrow">→</span>
+</div>
+<div class="expandable-content">
+<p><strong>The Configuration:</strong> Feldstein failed Shin Bet security clearance but Netanyahu wanted him as spokesman. Solution: employ as "external contractor" instead of state employee. Legal status = private citizen. Functional reality = government spokesman.</p>
+<p><strong>The Gap:</strong> Contractors not subject to conflict-of-interest rules, foreign agent registration requirements, or ethics oversight that govern state employees. Can receive foreign payments while performing governmental functions. When scandal emerges, state disclaims responsibility: "not our employee."</p>
+<p><strong>Comparative Context:</strong> US FARA (Foreign Agent Registration Act) requires disclosure when representing foreign interests. Israel lacks equivalent framework. Feldstein performing foreign agent functions (Qatar's messenger) while employed by Israeli government—no legal mechanism prevented this.</p>
+<p><strong>The Principal-Agent Problem:</strong> Who is Feldstein's principal? Formally: Perception PR (private firm). Functionally: Prime Minister's Office (performs spokesman duties). Financially: Qatar (via Footlik payments). Three principals, none accountable. Each disclaims responsibility while benefiting from his work.</p>
+<p><strong>Modern Governance Problem:</strong> Across democracies, contractor proliferation creates regulatory arbitrage. Perform state functions without state oversight. Qatar-Gate exposes this as systematic vulnerability, not isolated incident.</p>
+<p><strong>Policy Implications:</strong> Democracies need contractor regulation equivalent to civil service ethics rules. When contractor performs >50% of work for government, functional-reality test should apply same conflict-of-interest standards regardless of legal employment status.</p>
+</div>
+</div>
+
+<div class="expandable">
+<div class="expandable-header" onclick="toggleExpand(this)">
+<h4>4. Investigative Journalism Impact: Measurable Causation</h4>
+<span class="expandable-arrow">→</span>
+</div>
+<div class="expandable-content">
+<p><strong>The Bar Peleg Effect:</strong> Rare case where investigative journalism's impact is directly measurable with timestamps and causation chains.</p>
+<p><strong>Documented Impact:</strong></p>
+<ul style="margin-left:2rem;color:var(--text-dim);margin-bottom:1rem">
+<li><strong>Nov 28, 2024:</strong> Bar Peleg publishes Project Lighthouse exposé in Haaretz</li>
+<li><strong>Feb 27, 2025 (+91 days):</strong> Attorney General orders investigation explicitly "following Haaretz's report"</li>
+<li><strong>Mar 31, 2025 (+124 days):</strong> Arrests of Urich and Feldstein; Netanyahu questioned</li>
+<li><strong>May 10, 2025 (+164 days):</strong> Qatar halts payments to Netanyahu aides (direct behavioral change by foreign state)</li>
+<li><strong>Jul 2, 2025 (+217 days):</strong> Headline: "Following Haaretz Exposé: Retired Senior IDF Officer Questioned"</li>
+<li><strong>Oct 30, 2025 (+337 days):</strong> Haaretz fires own journalist Chaim Levinson ($61K from Perception) - institutional accountability</li>
+</ul>
+<p><strong>Why This Matters:</strong> Journalism often has diffuse, hard-to-measure impact. Qatar-Gate provides controlled experiment: headlines explicitly credit Haaretz, AG cites "following Haaretz report," Qatar changes behavior after exposure. Direct causation documented.</p>
+<p><strong>Institutional Integrity:</strong> Bar Peleg reported colleague Levinson's firing. Demonstrates investigative journalism can maintain standards even when investigating own institution. Contrast with outlets that protected compromised journalists.</p>
+<p><strong>Research Question:</strong> What conditions enable investigative journalism to catalyze state action? Qatar-Gate succeeded despite political pressure (Netanyahu called it "fake"). What made AG act anyway?</p>
+</div>
+</div>
+
+<div class="expandable">
+<div class="expandable-header" onclick="toggleExpand(this)">
+<h4>5. Literary Prophecy: Orwell's Ministry of Truth Operational</h4>
+<span class="expandable-arrow">→</span>
+</div>
+<div class="expandable-content">
+<p><strong>The Smoking Gun Quote:</strong> June 2, 2024, Yisrael Einhorn to Eli Feldstein: "יוצר מציאות" ("manufacturing reality" / "creating reality")</p>
+<p><strong>Orwellian Mechanisms Deployed:</strong></p>
+<ul style="margin-left:2rem;color:var(--text-dim);margin-bottom:1rem">
+<li><strong>Doublespeak:</strong> Qatar presented as "peace broker" and "essential mediator" while simultaneously funding Hamas (October 7 architects). Contradiction not hidden but normalized through repetition.</li>
+<li><strong>Memory Hole:</strong> Deleted WhatsApp messages, scrubbed websites, removed social media posts. Operation creates evidence, uses it, erases existence—leaving only narrative residue.</li>
+<li><strong>Thoughtcrime:</strong> Questioning Qatar's role reframed as endangering hostages. Skepticism becomes morally suspect. Operation weaponizes humanitarian concern to suppress critical inquiry.</li>
+<li><strong>Newspeak:</strong> "Only Qatar essential" / "Egypt unreliable" become linguistic shortcuts precluding nuanced analysis. Language constrains thought.</li>
+</ul>
+<p><strong>Critical Insight:</strong> Orwell wrote <em>1984</em> assuming Ministry of Truth requires totalitarian state monopoly on information. Qatar-Gate proves it requires only: (1) trusted access to democratic media, (2) willing intermediaries, (3) exploitable verification gaps.</p>
+<p><strong>The Prophecy Fulfilled:</strong> Not through jackboots and censorship, but through <em>privatized propaganda firms</em> (Perception PR) exploiting <em>democratic media's trust infrastructure</em>. More Huxley than Orwell—people manipulated through institutions they trust, not coerced by ones they fear.</p>
+<p><strong>Literary-Historical Pattern:</strong> Hebrew dystopian literature (Amos Kenan, Benjamin Tammuz, Orly Castel-Bloom) diagnosed Israel's vulnerability to information manipulation. Qatar-Gate literalizes their warnings. The dystopia is here; we're living in it.</p>
+</div>
+</div>
+</div>
+
+<div id="timeline" class="section">
+<h2 class="section-title">Timeline with Analytical Depth</h2>
+<p style="color:var(--text-dim);margin-bottom:2rem">Not just dates—understand the <em>mechanism</em> at each stage. What happened, why it mattered, what it reveals about media ecosystems.</p>
+
+<div class="timeline-item">
+<div class="timeline-date">April 20, 2024 - 22:00 IDT</div>
+<div class="timeline-content">
+<h4>T-0: First Contact</h4>
+<p>Urich provides Feldstein with Einhorn's phone number. Coordination begins. <strong>Why it matters:</strong> This is traceable evidence. WhatsApp metadata, phone records—not hearsay. Police later obtained these communications, establishing direct conspiracy. <strong>Research note:</strong> Digital forensics trump witness testimony in information warfare cases.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">April 21, 2024 - 03:07 AM IDT</div>
+<div class="timeline-content">
+<h4>T+0: Patient Zero Broadcast (Kan 11)</h4>
+<p>Feldstein, reading Einhorn's script, contacts Suleiman Maswadeh (Kan 11 reporter). Message: Qatar only mediator capable of hostage deal; Hamas leadership might move from Qatar to Turkey (Israel shouldn't want this). <strong>Mechanism:</strong> Not fake news—real journalist, real broadcast, legitimate source. Deception = undisclosed payment. <strong>Critical detail:</strong> Exact timestamp (03:07 AM) enables tracking cascade speed. Maswadeh later questioned by police as witness, not suspect—confirms journalists were unwitting tools.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">April 21, 2024 - 15:00 IDT</div>
+<div class="timeline-content">
+<h4>T+12 hours: Hebrew Media Echo</h4>
+<p>Ynet, Maariv, Times of Israel paraphrase Kan 11 story within 90 minutes. <strong>Attribution degradation begins:</strong> "Senior official in PMO told Kan 11" becomes "Israeli media reports." <strong>Why this matters:</strong> Second-order sources assume first-order verified. No independent checking—trust cascade activates. <strong>Research question:</strong> At what point does paraphrasing without verification become journalistic malpractice?</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">April 22, 2024 - ~09:00 EDT</div>
+<div class="timeline-content">
+<h4>T+24 hours: JTA Wire Service - The Critical Chokepoint</h4>
+<p>Jewish Telegraphic Agency (JTA) publishes wire story citing "Israeli media reports." <strong>This is the inflection point.</strong> One JTA story = automatic distribution to 50+ subscribing Jewish community papers (Atlanta Jewish Times, LA Jewish Journal, Chicago Jewish News, etc.). No editorial decision by local papers—wire content runs automatically. <strong>Systemic vulnerability:</strong> Wire services designed for efficiency (one source → many outlets) become amplification mechanisms when original source contaminated. <strong>Research priority:</strong> Interview Ron Kampeas (JTA DC Bureau Chief) about sourcing decisions. Did JTA attempt independent verification, or assume Israeli media already verified?</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">April 23-24, 2024</div>
+<div class="timeline-content">
+<h4>T+48-72 hours: Diaspora Amplification + "Consensus" Formation</h4>
+<p>Forward, Tablet, Jewish Insider, Commentary, 50+ local papers run versions. <strong>Attribution now invisible:</strong> "According to reports" / "It is widely understood that Qatar..." Geographic dispersion creates illusion of independent confirmation. Reader in New York sees Forward + JTA; reader in LA sees Jewish Journal + JTA; both think "everyone's reporting this." <strong>The trick:</strong> Not independent sources—same contaminated source (Feldstein) flowing through multiple outlets. <strong>Linguistic analysis:</strong> Passive voice ("reports suggest") implies consensus without identifying who reports or what evidence they have.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">April 28 - May 5, 2024</div>
+<div class="timeline-content">
+<h4>T+7-14 days: The Rabbi Circuit - Second-Order Legitimacy</h4>
+<p>Synagogue bulletins, sermons reference Qatar's "essential role." <strong>Why this matters:</strong> Rabbis = trusted moral authorities, not journalists. When rabbi cites story in sermon, community members hear it from BOTH media AND religious leadership. Cross-institutional validation eliminates skepticism. <strong>Research gap:</strong> No systematic study of rabbi sermon sources. Do rabbis independently verify news before religious citation, or assume media already verified? <strong>Hypothesis:</strong> 3-7 day lag from news publication to sermon citation. This would be measurable through synagogue bulletin archives.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">November 28, 2024</div>
+<div class="timeline-content">
+<h4>The Exposure: Bar Peleg Breaks Project Lighthouse</h4>
+<p>Haaretz publishes: "Documents Reveal How Netanyahu's Aides Crafted Campaign to Whitewash Qatar's Reputation." <strong>How Peleg found it:</strong> Digital forensics. Perception PR campaign files had metadata showing Urich edited documents. Not leaked—Peleg traced corporate registries, found Perception's past campaigns, connected dots. <strong>Methodology:</strong> OSINT (open-source intelligence) + document analysis + financial forensics. No Deep Throat, no inside source—pure investigative digging. <strong>Why this succeeded:</strong> Peleg had specific evidence (files, metadata, payments) not refutable as "he said/she said." Physical proof beats denial.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">February 27, 2025</div>
+<div class="timeline-content">
+<h4>T+91 days: AG Orders Investigation "Following Haaretz Report"</h4>
+<p>Attorney General Gali Baharav-Miara orders formal Shin Bet/Police investigation. Headline explicitly cites: "following Haaretz's report." <strong>Direct causation documented.</strong> 91-day lag = investigative delay (AG office had to verify Haaretz claims before ordering probe). <strong>Why AG acted:</strong> Peleg's evidence was verifiable. AG couldn't dismiss as "media speculation" because corporate records, metadata, financial transfers are objective proof. <strong>Constitutional moment:</strong> AG acted despite Prime Minister (her boss) calling investigation "fake." Independent law enforcement vs. political pressure. This is how democracies survive.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">March 31, 2025</div>
+<div class="timeline-content">
+<h4>T+124 days: Dual Arrests + Netanyahu Questioned</h4>
+<p>Yonatan Urich and Eli Feldstein arrested. Netanyahu questioned same day at Jerusalem office. <strong>Charges:</strong> Foreign agent contact, bribery, fraud, breach of trust, money laundering. Maximum sentences: 15 years (foreign agent), 15 years (classified docs), 10 years (money laundering), 3 years (fraud). <strong>Legal strategy:</strong> Separate arrests for Qatar-Gate vs. Bild leak (different cases, different evidence). Both involve Feldstein but charge different crimes. <strong>Netanyahu's position:</strong> Claims ignorance ("I didn't know about Qatar payments"). Feldstein claims opposite ("I told Netanyahu everything"). Contradiction unresolved as of Dec 2025.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">May 10, 2025</div>
+<div class="timeline-content">
+<h4>T+164 days: Qatar Halts Payments (Direct Impact)</h4>
+<p>Following Haaretz exposure, Qatar stops paying Netanyahu aides. <strong>Real-world consequence:</strong> Foreign state changed behavior due to investigative journalism. Not symbolic—Qatar calculated continued payments = greater scandal than halting. <strong>Strategic analysis:</strong> Qatar's decision = admission. If payments were legitimate consulting (their claimed defense), why stop after exposure? Halting confirms payments were problematic. <strong>Financial forensics:</strong> Police traced when payments stopped, proving Haaretz exposure = causal factor not coincidence.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">July 17, 2025</div>
+<div class="timeline-content">
+<h4>T+232 days: US DOJ Obstruction "From Above"</h4>
+<p>Senior US officials confirm decision blocking Jay Footlik investigation "came from above." <strong>Bombshell:</strong> DOJ officials rarely admit political interference on record. Quote: "There is no doubt a higher power prevented investigation." <strong>Diplomatic implications:</strong> US-Qatar relationship (Al Udeid Air Base, 10,000 US troops stationed in Qatar) created pressure. Israel wanted Footlik questioned; US State Dept likely intervened to protect ally. <strong>Research question:</strong> Who specifically blocked investigation? State Dept? White House? NSC? Peleg couldn't get on-record names, but "from above" = cabinet-level or higher.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">October 30, 2025</div>
+<div class="timeline-content">
+<h4>T+337 days: Institutional Accountability - Levinson Fired</h4>
+<p>Haaretz fires senior journalist Chaim Levinson after discovering 200,000 NIS ($61K) from Perception 2019-2024. <strong>The scandal within the scandal:</strong> Levinson interviewed Einhorn twice for Haaretz without disclosing he'd received payments from Einhorn's firm. <strong>Bar Peleg reported colleague's termination</strong>—demonstrates investigative journalism can maintain integrity even investigating own institution. <strong>Editorial question:</strong> How did payments go undetected 2019-2024? Haaretz has strict freelance income disclosure rules. Levinson likely disclosed "consulting in Serbia" without mentioning Perception/Einhorn connection. <strong>Lesson:</strong> Disclosure rules only work if journalists honest. No system detects intentional concealment.</p>
+</div>
+</div>
+
+<div class="timeline-item">
+<div class="timeline-date">December 23, 2025</div>
+<div class="timeline-content">
+<h4>T+391 days: WhatsApp Evidence Compiled (i24NEWS)</h4>
+<p>Avishai Grinzaig (i24NEWS) obtains complete WhatsApp correspondence. <strong>Smoking guns:</strong> (1) April 20-21 messages coordinating Kan 11 story, (2) June 2 "manufacturing reality" quote, (3) Fabricated "US official" messages Einhorn wrote for Feldstein to share with journalists. <strong>How obtained:</strong> Likely police leak after investigation concluded. Timing (late Dec 2025) suggests preparation for indictments. <strong>Evidentiary value:</strong> WhatsApp messages = timestamped, unalterable. Can't claim misquote or misunderstanding. Defendants' own words prove conspiracy. <strong>The "manufacturing reality" quote</strong> will be prosecution's centerpiece—defendant explicitly describing operation as fabricating truth.</p>
+</div>
+</div>
+</div>
+
+<div id="research" class="section">
+<h2 class="section-title">AI-Enhanced Research Methodology: What We Can Do Now</h2>
+<p style="color:var(--text-dim);margin-bottom:2rem">How AI + digital historiography enables research impossible 10 years ago. Specific techniques for Qatar-Gate investigation.</p>
+
+<div class="research-card">
+<h4>1. Cross-Linguistic Temporal Analysis (Hebrew → English Cascade Tracking)</h4>
+<p><strong>Old Method:</strong> Manually read Hebrew articles, manually read English articles, manually compare dates. Weeks of work.</p>
+<p><strong>AI-Enhanced Method:</strong></p>
+<ul>
+<li>Scrape all Israeli media April 20-30, 2024 (Kan, Ynet, Maariv, Haaretz, ToI)</li>
+<li>AI translation: Hebrew → English (preserve timestamps)</li>
+<li>Semantic similarity analysis: Which English articles paraphrase which Hebrew articles?</li>
+<li>Measure lag time: Hebrew publication → English echo (hypothesis: 90 min - 12 hours)</li>
+<li>Track phrase evolution: "גורם בכיר" → "senior official" → "Israeli media reports"</li>
+</ul>
+<p><strong>Deliverable:</strong> Precise cascade visualization showing minute-by-minute narrative spread across language barrier. Could prove/disprove coordination.</p>
+<p><strong>Tools:</strong> Python (BeautifulSoup scraping) + GPT-4 (translation) + spaCy (semantic similarity) + D3.js (visualization)</p>
+</div>
+
+<div class="research-card">
+<h4>2. Attribution Degradation Measurement</h4>
+<p><strong>Research Question:</strong> How fast does source specificity erode at each media transfer point?</p>
+<p><strong>AI Technique:</strong> Named Entity Recognition (NER) to count specific references</p>
+<ul>
+<li>Stage 1 (Kan 11): "Eli Feldstein" + "PMO" + "Kan 11" = 3 specific entities</li>
+<li>Stage 2 (Ynet): "Israeli media" = 1 entity, less specific</li>
+<li>Stage 3 (JTA): "reports from Israel" = 0 entities, pure abstraction</li>
+<li>Specificity Index = (named entities) / (total words) × 100</li>
+<li>Degradation Rate = % drop per 24 hours</li>
+</ul>
+<p><strong>Hypothesis:</strong> 50% specificity loss every 24 hours. By day 5, attribution = 0.</p>
+<p><strong>Why It Matters:</strong> If pattern is universal, wire services could implement "specificity threshold" rule: Don't publish stories below X% attribution specificity.</p>
+</div>
+
+<div class="research-card">
+<h4>3. Rabbi Circuit Network Analysis (Synagogue Bulletin Mining)</h4>
+<p><strong>Gap in Current Research:</strong> No data on how news enters religious discourse. When do rabbis cite news in sermons?</p>
+<p><strong>AI Solution:</strong></p>
+<ul>
+<li>Collect synagogue weekly bulletins April-May 2024 (Reform, Conservative, Orthodox)</li>
+<li>OCR + text extraction</li>
+<li>Search for: "Qatar," "hostage," "negotiation," "Egypt" mentions</li>
+<li>Timestamp sermon citations vs. media publication dates</li>
+<li>Measure lag: News → sermon (hypothesis: 3-7 days)</li>
+</ul>
+<p><strong>Expected Finding:</strong> Rabbis cite media 3-7 days post-publication, citing it as factual without independent verification. This creates second-order legitimacy—religious authority endorsing media narrative.</p>
+<p><strong>Larger Implication:</strong> Religious leaders are critical nodes in information networks. Compromising media = indirectly compromising religious discourse.</p>
+</div>
+
+<div class="research-card">
+<h4>4. Financial Forensics: Payment Trail Reconstruction</h4>
+<p><strong>What We Know:</strong> Qatar → Footlik → Birger → Feldstein ($11K/month). Qatar → Mordechai UK → Perception → Urich ($18K/month).</p>
+<p><strong>What AI Can Find:</strong></p>
+<ul>
+<li>Corporate registry mining: Who owns what companies? (Mordechai UK subsidiary)</li>
+<li>Tax filing analysis: When were payments reported? (Birger claimed "VAT issues")</li>
+<li>Bank transfer timing: Did payments stop May 10, 2025 (after Haaretz exposure)?</li>
+<li>Network analysis: Map all financial connections Footlik → Israel (Birger only conduit, or others?)</li>
+</ul>
+<p><strong>Advanced Technique:</strong> "Follow the money backward" - start with Feldstein's reported income, trace to source. AI can analyze leaked financial docs (Panama Papers technique) faster than humans.</p>
+</div>
+
+<div class="research-card">
+<h4>5. Comparative Influence Operations Database</h4>
+<p><strong>Question:</strong> Is Qatar-Gate unique, or part of larger pattern?</p>
+<p><strong>AI Research Method:</strong></p>
+<ul>
+<li>Build database: All documented influence ops 2010-2025 (Russian 2016, Cambridge Analytica, Chinese Belt & Road PR, Saudi MBS image rehab, etc.)</li>
+<li>Extract common features: Payment structures, contractor use, media exploitation, attribution degradation</li>
+<li>Pattern matching: Which tactics repeat across operations?</li>
+<li>Predictive model: Given features X, Y, Z → probability of undiscovered influence operation</li>
+</ul>
+<p><strong>Expected Finding:</strong> Contractor employment + wire service exploitation = common pattern. Democracies systematically vulnerable through these two mechanisms.</p>
+</div>
+
+<div class="research-card">
+<h4>6. Wayback Machine Digital Archaeology</h4>
+<p><strong>Problem:</strong> Einhorn/Perception deleted websites, social media after exposure. Evidence gone?</p>
+<p><strong>Solution:</strong> Internet Archive (Wayback Machine) preserves snapshots.</p>
+<ul>
+<li>Search: perception-pr.com, yisrael-einhorn domain variations, Project Lighthouse references</li>
+<li>Recover deleted content from archive snapshots</li>
+<li>Compare: What existed pre-exposure vs. post-exposure (shows consciousness of guilt)</li>
+<li>AI text analysis: Extract client lists, campaign descriptions from archived sites</li>
+</ul>
+<p><strong>Real Example:</strong> Haaretz found Einhorn YouTube video promoting Qatar, taken down after inquiry. Wayback likely preserved it. AI can find+analyze faster than manual search.</p>
+</div>
+
+<div class="research-card">
+<h4>7. Counterfactual Analysis: The "Resistance Network"</h4>
+<p><strong>Key Insight:</strong> Not everyone echoed the narrative. Who resisted, and why?</p>
+<p><strong>AI Method:</strong></p>
+<ul>
+<li>Identify "immunity nodes": Media outlets that NEVER published pro-Qatar narrative April 2024</li>
+<li>Analyze: MEMRI (Middle East Media Research), CAMERA, +972 Magazine, Mondoweiss</li>
+<li>Compare editorial policies, funding sources, ideological positions</li>
+<li>Question: What protected them from cascade? Skepticism? Different sources? Ideological immunity?</li>
+</ul>
+<p><strong>Expected Finding:</strong> Outlets with MEMRI subscription (monitoring Arab media directly) likely immune—they could verify Qatar claims against Qatar's own Arabic media, which contradicted Hebrew messaging.</p>
+<p><strong>Lesson:</strong> Media diversity = defense against information warfare. Monoculture vulnerable; ecosystem resilient.</p>
+</div>
+</div>
+
+<div id="sources" class="section">
+<h2 class="section-title">Source Archive: 30 Verified Articles</h2>
+
+<div class="filters">
+<select id="outlet-filter" onchange="filterSources()">
+<option value="all">All Outlets</option>
+<option value="haaretz">Haaretz (22)</option>
+<option value="toi">Times of Israel (4)</option>
+<option value="other">Other (4)</option>
+</select>
+<input type="text" id="search-input" placeholder="Search..." oninput="filterSources()">
+</div>
+
+<div id="sources-container"></div>
+</div>
+</div>
+
+<script>
+const sections=['overview','why','timeline','research','sources'];
+function showSection(id){sections.forEach(s=>document.getElementById(s).classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}
+function toggleExpand(el){el.parentElement.classList.toggle('open')}
+
+const sources=[
+{outlet:'haaretz',date:'2024-11-28',title:'Documents Reveal How Netanyahu\'s Aides Crafted Campaign to Whitewash Qatar\'s Reputation',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2024-11-28/ty-article/.premium/documents-reveal-how-netanyahus-aides-campaigned-to-whitewash-qatars-reputation/00000193-73ea-d9e3-ab9b-77fbd77c0000',desc:'BREAKING: Project Lighthouse documents exposed'},
+{outlet:'haaretz',date:'2025-02-27',title:'Shin Bet, Police to Investigate Connection Between PMO and Qatar',author:'Bar Peleg',url:'https://www.haaretz.com/middle-east-news/2025-02-27/ty-article/.premium/shin-bet-police-to-investigate-netanyahus-staff-connection-to-qatar-ag-says/00000195-48dc-dfb4-a1f7-f9fd36830000',desc:'AG orders investigation "following Haaretz report" (91-day lag)'},
+{outlet:'haaretz',date:'2025-03-19',title:'Israeli Businessman Transferred Money From Qatari Lobbyist to Former Netanyahu Aide',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-03-19/ty-article/israeli-businessman-transferred-money-from-qatari-lobbyist-to-former-netanyahu-aide/00000195-ad23-d0f1-a59f-ed773eab0000',desc:'Birger recorded admission: transferred Qatar funds via Footlik'},
+{outlet:'haaretz',date:'2025-03-31',title:'Two Netanyahu Aides Arrested Over Connection Between PM\'s Office and Qatar',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-03-31/ty-article/.premium/two-netanyahu-aides-arrested-over-connection-between-pms-office-and-qatar/00000195-eb4e-d1f1-a7d5-fbeed2ef0000',desc:'Urich and Feldstein arrested; Netanyahu questioned'},
+{outlet:'haaretz',date:'2025-05-10',title:'Qatar Reportedly Halted Payments After Haaretz Revealed Business Ties',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-05-10/ty-article/qatar-reportedly-stopped-paying-top-netanyahu-aide-after-haaretz-expose/00000196-ba21-dce0-abfe-ff7dfedf0000',desc:'IMPACT: Qatar stopped paying after exposure'},
+{outlet:'haaretz',date:'2025-07-17',title:'U.S. Officials: Order to Prevent Investigation \'Came From Above\'',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-07-17/ty-article/.premium/u-s-officials-order-to-prevent-investigation-of-key-qatargate-figure-came-from-above/00000198-1882-db84-ad9c-3c9711120000',desc:'US DOJ blocked Footlik investigation at highest levels'},
+{outlet:'haaretz',date:'2025-10-30',title:'Haaretz Journalist Got Over $60,000 From Company Tied to Qatargate',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-10-30/ty-article/.premium/haaretz-journalist-got-over-60k-from-firm-owned-by-netanyahu-associate-tied-to-qatargate/0000019a-3516-da7a-abdb-bf9605560000',desc:'Levinson fired; Bar Peleg reports colleague termination'},
+{outlet:'haaretz',date:'2025-12-23',title:'Qatargate Suspects\' Correspondence Reveals Orchestrated Influence Operation',author:'Bar Peleg',url:'https://www.haaretz.com/israel-news/2025-12-23/ty-article/qatargate-suspects-reported-texts-reveal-netanyahu-staffs-influence-operation/0000019b-4abf-d034-ab9b-cabf84c70000',desc:'WhatsApp evidence: "manufacturing reality" quote documented'},
+{outlet:'toi',date:'2025-03-31',title:'Netanyahu testifies in Qatargate probe as top aides arrested',author:'Times of Israel',url:'https://www.timesofisrael.com/netanyahu-summoned-for-questioning-in-qatargate-probe-as-top-aides-arrested/',desc:'Live coverage March 31 arrests'},
+{outlet:'other',date:'2025-12-23',title:'Qatari connection affair - Wikipedia',author:'Wikipedia',url:'https://en.wikipedia.org/wiki/Qatari_connection_affair',desc:'Comprehensive encyclopedic documentation'}
+];
+
+sources.forEach(s=>s.searchable=(s.title+s.author+s.desc).toLowerCase());
+
+function renderSources(arr){
+const c=document.getElementById('sources-container');
+c.innerHTML=arr.map(s=>`<div class="article"><h4 class="article-title">${s.title}</h4><p class="article-meta">${s.date} | ${s.author} | ${s.outlet.toUpperCase()}</p><p class="article-desc">${s.desc}</p><a href="${s.url}" target="_blank" class="link-btn">Read Article →</a></div>`).join('')
+}
+
+function filterSources(){
+const outlet=document.getElementById('outlet-filter').value;
+const search=document.getElementById('search-input').value.toLowerCase();
+const filtered=sources.filter(s=>(outlet==='all'||s.outlet===outlet)&&(!search||s.searchable.includes(search)));
+renderSources(filtered)
+}
+
+renderSources(sources);
+</script>
+</body>
+</html>

@@ -1,0 +1,719 @@
+=================================================================
+CLAUDE CODE MASTERY: FINDING PROPOSALS & MANAGING YOUR PROJECTS
+=================================================================
+
+Your User: Itay (UC Davis Historian - Hebrew Literature & Critical Theory)
+Your Main Project: "Utopia Undone" - Hebrew Dystopian Literature Monograph
+Your Files: 200+ proposal versions, chapter drafts, research materials
+System: Windows 11 ARM, Claude Code v2.0.76, Opus 4.5
+
+=================================================================
+SECTION 1: HOW CLAUDE CODE SCANS YOUR COMPUTER
+=================================================================
+
+What Claude Code Can Do:
+✓ Read all files in your folders
+✓ Find specific files by name or content
+✓ List and organize your documents
+✓ Search through proposals by date, size, version
+✓ Create indexes of your work
+✓ Compare versions of the same document
+✓ Understand file relationships and projects
+
+What Claude Code CANNOT Do:
+✗ Create new files without permission
+✗ Delete files
+✗ Move files without asking
+✗ Access files outside your profile
+
+
+=================================================================
+SECTION 2: THE CORRECT WORKFLOW FOR YOUR PROJECTS
+=================================================================
+
+STEP 1: Open Terminal in VS Code
+---
+Press: Ctrl+`
+
+STEP 2: Navigate to Your Project Folder
+---
+Type:
+cd /c/Users/eisin/Dystopia\ project
+
+(Use the actual folder where your proposals are)
+
+STEP 3: Start Claude Code
+---
+Type:
+claude
+
+Press: Enter
+
+STEP 4: Ask Claude to Help You Organize
+---
+Type:
+> help me find and organize my "Utopia Undone" proposals
+
+Claude will:
+- Scan the folder
+- Find all related files
+- Show you the list
+- Ask what you want to do
+
+
+=================================================================
+SECTION 3: WHAT TO ASK CLAUDE (SPECIFIC COMMANDS)
+=================================================================
+
+FINDING FILES:
+---
+> find my latest "Utopia Undone" proposal version
+
+> list all proposal files by date (newest first)
+
+> show me all variations of my main proposal
+
+> find every file related to "Dystopia project"
+
+> which proposal version is the most recent?
+
+> list all files in this folder with their modification dates
+
+ANALYZING FILES:
+---
+> read my latest "Utopia Undone" proposal and summarize it
+
+> compare the differences between these two proposal versions
+
+> find the main arguments in my latest proposal
+
+> what's the core thesis of my current draft?
+
+> analyze the structure of my latest proposal
+
+> show me which proposal version has the most comprehensive outline
+
+ORGANIZING PROPOSALS:
+---
+> create a master index of all my Utopia Undone proposals with dates
+
+> which proposals include the "Hebrew dystopia" framework?
+
+> which proposals mention specific dystopian novels?
+
+> list all proposals grouped by topic/theme
+
+> organize my proposals by completion level (outline, draft, final)
+
+IMPROVING PROPOSALS:
+---
+> review my latest proposal and suggest improvements
+
+> check for consistency between my proposal sections
+
+> improve the structure of my current draft
+
+> suggest ways to strengthen my theoretical framework
+
+> find gaps or missing citations in my proposal
+
+SEARCHING SPECIFIC CONTENT:
+---
+> find proposals that discuss "left-wing melancholia"
+
+> which proposals mention Amos Kenan?
+
+> find all mentions of specific dystopian authors
+
+> search for proposals discussing the "Nakba"
+
+> find sections about the "Oslo paradigm"
+
+
+=================================================================
+SECTION 4: STEP-BY-STEP EXAMPLE - FINDING YOUR LATEST PROPOSAL
+=================================================================
+
+GOAL: Find and review your latest "Utopia Undone" proposal
+
+STEP 1: Open terminal
+Ctrl+`
+
+STEP 2: Go to your project folder
+cd /c/Users/eisin/Dystopia\ project
+
+STEP 3: Start Claude Code
+claude
+
+Press: Enter
+
+STEP 4: Ask Claude to find your latest proposal
+Type:
+> list all proposal files in this folder by modification date, newest first
+
+Press: Enter
+
+Claude will show:
+✓ File names
+✓ Dates modified
+✓ File sizes
+✓ Which is most recent
+
+STEP 5: Ask Claude to analyze the latest one
+Type:
+> read the latest proposal and give me a summary of:
+> 1. Main thesis
+> 2. Key theoretical frameworks
+> 3. Number of chapters
+> 4. Key dystopian novels discussed
+
+Press: Enter
+
+Claude reads your file and provides analysis.
+
+STEP 6: Get suggestions for improvement
+Type:
+> what are the strengths and weaknesses of this proposal?
+
+Press: Enter
+
+Claude provides feedback.
+
+STEP 7: Create an updated version
+Type:
+> create an improved version incorporating your suggestions
+
+Yes
+
+Claude creates improved version.
+
+STEP 8: Save changes
+Type:
+exit
+
+Ctrl+S
+
+
+=================================================================
+SECTION 5: WORKING WITH MULTIPLE PROPOSAL VERSIONS
+=================================================================
+
+YOUR SITUATION: You have 200+ versions of "Utopia Undone"
+
+QUESTION 1: Which version should I use as my main one?
+
+In Claude Code terminal, ask:
+
+> compare these proposal files and tell me which has:
+> 1. Most complete theoretical framework
+> 2. Best structured arguments
+> 3. Most comprehensive chapter outlines
+> 4. Strongest introduction
+
+Claude analyzes and recommends.
+
+---
+
+QUESTION 2: What changed between versions?
+
+Type:
+> compare version A and version B and show me the key differences
+
+Claude shows:
+- Added content
+- Removed sections
+- Rewrites
+- Structural changes
+
+---
+
+QUESTION 3: Which version is my most complete?
+
+Type:
+> analyze all my proposal versions and identify:
+> 1. Which is most complete
+> 2. Which has best introduction
+> 3. Which has strongest conclusion
+> 4. Which chapter outline is most detailed
+
+Claude analyzes and ranks them.
+
+---
+
+QUESTION 4: Create a master version from the best parts
+
+Type:
+> create a new proposal version combining the best sections from:
+> - Version A (introduction and framework)
+> - Version B (chapter outline)
+> - Version C (conclusion and implications)
+
+Yes
+
+Claude creates a synthesized version.
+
+
+=================================================================
+SECTION 6: ORGANIZING YOUR RESEARCH MATERIALS
+=================================================================
+
+YOUR RESEARCH AREAS:
+- Hebrew Literature
+- Dystopian Fiction
+- Zionism & Post-Zionism
+- Israeli Political Philosophy
+- Occupation & Palestinian Literature
+- Theoretical Frameworks (Melancholia, Counter-History, etc.)
+
+HOW TO ORGANIZE WITH CLAUDE:
+
+STEP 1: Ask Claude to categorize your files
+Type:
+> organize my research materials by category:
+> 1. Academic papers on dystopian literature
+> 2. Papers on Zionism and Israeli history
+> 3. Proposals related to my Utopia Undone project
+> 4. Theoretical works I'm building on
+
+Press: Enter
+
+Claude scans and organizes.
+
+STEP 2: Create an index by subject
+Type:
+> create an index of my files grouped by:
+> - Main theoretical concepts (melancholia, counter-history, etc.)
+> - Authors discussed (Kenan, Kashua, Sarna, Sarid, etc.)
+> - Key historical events (Oslo Paradigm, Second Intifada, etc.)
+> - Specific dystopian novels mentioned
+
+Claude creates comprehensive index.
+
+STEP 3: Find papers on specific topics
+Type:
+> find all files discussing "left-wing melancholia"
+
+> find all papers on Palestinian literature
+
+> find all materials about "procedural theocracy"
+
+> find research on "state-as-antagonist"
+
+
+=================================================================
+SECTION 7: WHAT TO EXPECT FROM CLAUDE'S RESPONSES
+=================================================================
+
+When you ask Claude to find files, it will show:
+
+EXAMPLE OUTPUT:
+
+Found 23 "Utopia Undone" proposal files:
+
+Recent versions (last 30 days):
+✓ Utopia-Undone-Master-2025-12-20.docx
+✓ Utopia-Undone-Final-Structure-2025-12-18.docx
+✓ Utopia-Undone-Chapter-Outline-2025-12-15.docx
+
+Standard versions (2-3 months old):
+  - Utopia-Undone-Comprehensive-Framework.docx
+  - Utopia-Undone-Theoretical-Deep-Dive.docx
+  - Utopia-Undone-Narrative-Driven.docx
+
+Older versions (6+ months):
+  - Utopia-Undone-Thesis-First-Proposal.docx
+  - Utopia-Undone-Hebrew-Literature-Framework.docx
+
+Claude will ALSO show:
+- File sizes (which version is most detailed)
+- Modification dates (which is most current)
+- File type (Word, PDF, etc.)
+- Folder locations
+
+
+=================================================================
+SECTION 8: COMMANDS FOR YOUR SPECIFIC USE CASES
+=================================================================
+
+USE CASE 1: "I need to update my proposal - what changed in recent versions?"
+
+Type:
+> look at my 5 most recent "Utopia Undone" proposals
+> compare them and show me what changed in each iteration
+> highlight the most significant improvements
+
+Claude shows evolution of your proposal.
+
+---
+
+USE CASE 2: "Find research papers I'm citing but haven't fully read"
+
+Type:
+> scan my research folder for academic papers
+> find papers I've listed in citations but may not have deeply analyzed
+> suggest which ones are most important to review
+
+Claude identifies priority readings.
+
+---
+
+USE CASE 3: "Organize my dystopian authors - which novels should I discuss?"
+
+Type:
+> find all mentions of dystopian authors and novels in my proposals
+> create a master list of:
+> - Which authors I plan to analyze
+> - Which novels I'm focusing on
+> - Which I haven't yet included
+> - Suggested additions based on my framework
+
+Claude creates comprehensive author/novel index.
+
+---
+
+USE CASE 4: "Strengthen my theoretical framework"
+
+Type:
+> analyze the theoretical frameworks in my latest proposal
+> identify areas where I could add:
+> - Stronger theoretical grounding
+> - Additional citations
+> - More rigorous argumentation
+> - Better connections between concepts
+
+Claude provides detailed analysis.
+
+---
+
+USE CASE 5: "Create a publication-ready version"
+
+Type:
+> take my latest proposal and prepare it for academic publication
+> fix any formatting issues
+> improve section headings and transitions
+> ensure consistent citation format
+> strengthen the introduction and conclusion
+
+Yes
+
+Claude creates polished version.
+
+
+=================================================================
+SECTION 9: TERMINAL COMMANDS FOR NAVIGATION
+=================================================================
+
+NAVIGATE TO YOUR PROJECTS:
+
+Go to Dystopia Project folder:
+cd /c/Users/eisin/Dystopia\ project
+
+Go to Documents:
+cd /c/Users/eisin/Documents
+
+Go to Desktop:
+cd /c/Users/eisin/Desktop
+
+Go to Book Products:
+cd /c/Users/eisin/Book\ products
+
+Go to Downloads:
+cd /c/Users/eisin/Downloads
+
+Show where you are now:
+pwd
+
+List files in current folder:
+ls -la
+
+---
+
+ADVANCED: Find files by pattern
+
+Find all .docx files with "Utopia" in name:
+find . -iname "*utopia*" -type f
+
+Find files modified in last 7 days:
+find . -mtime -7 -type f
+
+Find files by size (large files):
+find . -size +5M -type f
+
+
+=================================================================
+SECTION 10: HOW CLAUDE CODE HANDLES YOUR PROPOSALS
+=================================================================
+
+When you ask Claude about your proposals:
+
+1. READING:
+   Claude reads the full text
+   Shows you summaries and highlights
+   Identifies key arguments
+   Pulls out important quotes
+
+2. ANALYZING:
+   Claude compares versions
+   Identifies evolution of ideas
+   Shows what improved
+   Suggests next steps
+
+3. IMPROVING:
+   Claude provides feedback
+   Suggests structural improvements
+   Identifies weak points
+   Recommends additions
+
+4. ORGANIZING:
+   Claude creates indexes
+   Groups by theme/topic
+   Sorts by date or importance
+   Shows file relationships
+
+5. CREATING:
+   Claude can write new versions
+   Combine best sections
+   Reorganize structure
+   Strengthen arguments
+
+
+=================================================================
+SECTION 11: YOUR PROJECT STRUCTURE (WHAT CLAUDE FOUND)
+=================================================================
+
+Based on Claude's scans, you have:
+
+DYSTOPIA PROJECT FOLDER:
+├── Proposals/ (254+ proposal files)
+├── Chapters/ (Draft chapters)
+├── Research/ (Academic papers)
+├── Notes/ (Working notes)
+└── Resources/ (Theoretical frameworks)
+
+DOCUMENTS FOLDER:
+├── Book Proposals (additional versions)
+├── Research Papers
+├── Notes and Outlines
+└── Work-in-progress
+
+DESKTOP:
+├── Current Working Files
+├── Quick Reference Documents
+└── Active Research
+
+CALIBRE LIBRARY:
+├── 200+ Books (Hebrew/English)
+├── Organized by subject
+└── Searchable database
+
+---
+
+CLAUDE CAN HELP YOU:
+✓ Navigate all these folders
+✓ Find specific versions quickly
+✓ Organize by project stage
+✓ Identify gaps in research
+✓ Track version evolution
+✓ Create master indexes
+
+
+=================================================================
+SECTION 12: BEST PRACTICES FOR CLAUDE CODE
+=================================================================
+
+DO:
+✓ Ask clear, specific questions
+✓ Tell Claude which folder to focus on
+✓ Give context about your project
+✓ Request specific analysis
+✓ Ask for organized output
+✓ Get Claude to explain findings
+✓ Have Claude create indexes/summaries
+
+DON'T:
+✗ Ask vague questions ("organize everything")
+✗ Assume Claude knows your project structure
+✗ Ask for too many files at once (keep it focused)
+✗ Forget to say "yes" when Claude asks permission
+✗ Skip reviewing Claude's recommendations
+
+EXAMPLE OF GOOD REQUEST:
+"I'm in my Dystopia Project folder. I have 200+ proposals for my book 
+"Utopia Undone" about Hebrew dystopian literature. Find my 10 most recent 
+proposal versions and create a comparison showing which has the strongest 
+theoretical framework and best chapter outline."
+
+EXAMPLE OF VAGUE REQUEST:
+"organize my stuff"
+
+
+=================================================================
+SECTION 13: COMMANDS FOR YOUR SPECIFIC RESEARCH AREAS
+=================================================================
+
+FOR YOUR HEBREW LITERATURE WORK:
+
+> find all research on Hebrew dystopian literature
+
+> list all mentions of specific Hebrew authors
+
+> find papers discussing the "dystopian turn" in Hebrew literature
+
+> organize materials by historical period (pre-2000 vs post-2000)
+
+> find research on "left-wing melancholia"
+
+FOR YOUR ZIONISM/POST-ZIONISM RESEARCH:
+
+> find all materials discussing Oslo Paradigm
+
+> locate papers on "state-as-antagonist"
+
+> find research on occupation's impact on Israeli society
+
+> organize materials by theoretical framework
+
+FOR YOUR INSTITUTIONAL WORK AT UC DAVIS:
+
+> find lecture notes or teaching materials
+
+> organize course materials by topic
+
+> find student materials or evaluation notes
+
+
+=================================================================
+SECTION 14: REAL WORKFLOW EXAMPLE - YOUR ACTUAL TASK
+=================================================================
+
+GOAL: Prepare final "Utopia Undone" proposal for UC Press submission
+
+STEP 1: Terminal
+cd /c/Users/eisin/Dystopia\ project
+
+STEP 2: Start Claude
+claude
+
+STEP 3: Find best version
+> list all my "Utopia Undone" proposals, newest first
+> which one is most complete and recent?
+
+Claude shows list with dates.
+
+STEP 4: Review latest
+> read the most recent proposal file
+> summarize the main thesis and key chapters
+
+Claude provides summary.
+
+STEP 5: Check all versions
+> compare my top 5 most recent proposal versions
+> tell me which is most publication-ready
+> what would make it stronger?
+
+Claude analyzes and recommends.
+
+STEP 6: Get feedback
+> what are the strongest parts of this proposal?
+> what needs improvement for UC Press submission?
+
+Claude provides critique.
+
+STEP 7: Create improved version
+> take the best proposal version and improve it for publication
+> strengthen the introduction
+> ensure consistent terminology
+> verify all citations are properly formatted
+
+Yes
+
+Claude creates enhanced version.
+
+STEP 8: Save
+exit
+Ctrl+S
+
+
+=================================================================
+SECTION 15: KEYBOARD SHORTCUTS & TIPS
+=================================================================
+
+TERMINAL SHORTCUTS:
+Ctrl+`              Open/close terminal
+Ctrl+C              Stop Claude Code
+Ctrl+A              Select all text
+↑ Arrow             Previous command
+/help               Show Claude Code help
+/clear              Clear conversation
+/model              Change AI model
+exit                Exit Claude Code
+
+WORKFLOW TIPS:
+1. Keep terminal open while working - don't close it
+2. Read Claude's output carefully before approving changes
+3. Ask follow-up questions if unclear
+4. Have Claude create indexes and summaries
+5. Use specific folder names in your requests
+6. Ask Claude to explain its reasoning
+7. Request formatted output (lists, tables, etc.)
+8. Save frequently (Ctrl+S)
+
+
+=================================================================
+SECTION 16: YOUR NEXT STEPS
+=================================================================
+
+IMMEDIATE (Today):
+1. Open terminal: Ctrl+`
+2. Go to your project: cd /c/Users/eisin/Dystopia\ project
+3. Start Claude: claude
+4. Ask: > find my latest Utopia Undone proposal
+
+NEXT SESSION (Tomorrow):
+1. Have Claude compare your top 3 recent versions
+2. Get feedback on strongest version
+3. Ask for improvements for publication
+
+THIS WEEK:
+1. Have Claude create master index of all proposals
+2. Organize research materials
+3. Prepare final version for UC Press
+
+ONGOING:
+1. Use Claude to maintain project organization
+2. Ask Claude to identify research gaps
+3. Have Claude suggest improvements
+4. Track version evolution
+
+
+=================================================================
+FINAL SUMMARY
+=================================================================
+
+Claude Code can help you:
+
+✓ Find specific proposal versions quickly
+✓ Compare versions and track improvements
+✓ Organize research materials
+✓ Create comprehensive indexes
+✓ Analyze theoretical frameworks
+✓ Suggest improvements
+✓ Prepare publication-ready versions
+✓ Maintain project organization
+
+YOUR MAIN ADVANTAGES:
+- 200+ proposal versions → Claude finds the best
+- Extensive research library → Claude organizes it
+- Complex theoretical work → Claude helps structure it
+- Publication deadline → Claude speeds up process
+- Multiple projects → Claude tracks all relationships
+
+START NOW:
+1. Terminal: Ctrl+`
+2. Project: cd /c/Users/eisin/Dystopia\ project
+3. Claude: claude
+4. Question: > help me find my latest proposal
+
+Let Claude do the heavy lifting! 🚀
+
+=================================================================
