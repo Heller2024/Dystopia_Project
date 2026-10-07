@@ -1,5 +1,11 @@
 # Plan: one reading site from the Utopia Undone Companion and state-less
 
+Status: on hold since 7 October 2026. The second analysis you pasted recommends
+keeping the Companion and state-less apart; the current work is in
+`apps/PLAN_STATE-LESS.md` and `apps/state-less-v3.html`. Sections 1 and 2 below
+(what the Companion still carries from the game version; its conflicts with the
+decisions file) remain valid for the Companion on its own.
+
 Date: 7 October 2026. Branch: `claude/brave-allen-zusipw`.
 Sources read in full: `apps/sources/utopia-undone-companion.html` (1,598 lines) and
 `apps/sources/state-less-v2-reading-app.html` (14 pages, 23 editorial notes).
