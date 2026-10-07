@@ -41,8 +41,10 @@ Changed, presentation only:
   counts on Iran ×22; the four renderings on Exercise 8.
 - "Also named on this site": for each page, the other pages that name the same
   people (found in the text, not written by me).
-- A "Dashes" switch: converted (as the v2 reading view did) or as written. Page
-  titles keep their punctuation either way.
+- A "Dashes" switch: as written (the default) or converted, as the v2 reading view
+  did. The default changed to "as written" on 7 October because the conversion turns
+  paired dashes into stray semicolons ("Ein medina; nothing works; is what Israelis
+  say"). Page titles keep their punctuation either way.
 - Search covers the editorial questions too.
 - One labelled build note, on LINKD, saying the page has no entries yet.
 

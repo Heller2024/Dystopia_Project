@@ -216,7 +216,7 @@ const pages=DATA.pages,notes=DATA.notes;
 const TOOLS={index:'Page index',all:'The complete v2',audit:'Editorial questions',provenance:'Source and provenance'};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const prefs={dashes:'converted',theme:null};
+const prefs={dashes:'written',theme:null};
 try{Object.assign(prefs,JSON.parse(localStorage.getItem('state-less-v3')||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem('state-less-v3',JSON.stringify(prefs))}catch(e){}};
 
