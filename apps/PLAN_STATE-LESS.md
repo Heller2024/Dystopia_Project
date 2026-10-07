@@ -1,5 +1,13 @@
 # state-less: what is in hand, what was built, what each page still needs
 
+Later on 7 October: the working app is now `apps/state-less.html`. At the author's
+request it carries no provenance labels, no editorial-notes layer, no dash
+switch, and the text as written, with two changes the author made: page 11 is
+titled "ON LATE-CAPITALISM AND TOO-LATE ZIONISM", and its sentence on the tense
+of the event now reads "October 7" (allowed once). The v2 notes remain in
+`apps/sources/state-less-v2-reading-app.html` and in the ledger below.
+`apps/state-less-v3.html` (the labelled reading copy) was removed.
+
 Date: 7 October 2026. Branch: `claude/brave-allen-zusipw`.
 Read in full: `apps/sources/state-less-v2-reading-app.html` (14 pages, 23 editorial
 notes, the exact supplied v2 source). Also read: the Utopia Undone Companion, for
