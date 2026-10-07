@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Utopia Undone Companion</title>
+<meta name="description" content="Utopia Undone: Hebrew Literature from Herzl to Gaza. The chapters, novels and epilogue, with every sentence drawn from the dissertation and the book proposal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07070b; --ink:#0d0d13; --panel:rgba(17,17,24,.86); --panel-2:rgba(23,23,32,.9);
+  --line:rgba(255,255,255,.07); --line-2:rgba(255,255,255,.14);
+  --text:#ece7dc; --text-2:#c2bcaf; --muted:#958f83;
+  --accent:#e6c547; --accent-2:#c9a227; --warn:#d2603a; --cool:#5b8fd0;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --read:"Newsreader",Georgia,"Times New Roman",serif; --dw:min(540px,94vw);
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1); --ease-back:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--void);color:var(--text);font-family:var(--read);font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+body.hc{--panel:#000;--panel-2:#000;--text:#fff;--text-2:#fff;--muted:#ddd;--line:#fff;--line-2:#fff;--accent:#ffdd33}
+::selection{background:rgba(230,197,71,.28)}
+
+/* ---------- ambient (trimmed: one background scene, light grain, no scanlines) ---------- */
+#grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
+  background-image:var(--grain);background-size:180px 180px}
+#vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 45%,rgba(0,0,0,.5) 100%)}
+
+/* ---------- overture ---------- */
+#overture{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:2.4rem 1.2rem;overflow-y:auto;overscroll-behavior:contain;
+  transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
+body:not(.in-app) .topbar,body:not(.in-app) #app{pointer-events:none}
+#overture.gone{opacity:0;transform:scale(1.08);pointer-events:none}
+.ov-kicker{font-family:var(--mono);font-size:.66rem;letter-spacing:.42em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:2.1rem;opacity:0;animation:fadeIn 1s .3s var(--ease) forwards}
+#overture>*{max-width:100%}
+.ov-title{max-width:100%;font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,9vw,7.2rem);letter-spacing:.10em;
+  line-height:1;margin:0;display:flex;gap:.02em;flex-wrap:wrap;justify-content:center}
+.ov-title .ltr{display:inline-block;opacity:0;transform:translateY(46px) rotateX(-70deg) scale(1.3);
+  filter:blur(12px);animation:ltrIn .95s var(--ease-back) forwards}
+.ov-title .sp{width:.4em}
+.ov-rule{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  margin:1.9rem 0 1.7rem;animation:ruleGrow 1.4s 1.5s var(--ease) forwards}
+.ov-sub{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,2.3vw,1.5rem);color:var(--text-2);
+  opacity:0;animation:fadeUp .9s 1.6s var(--ease) forwards;max-width:46ch}
+.ov-epi{margin-top:2.3rem;max-width:60ch;font-family:var(--serif);font-size:clamp(1rem,2vw,1.35rem);
+  line-height:1.6;color:var(--text);min-height:3.2em;border-left:2px solid var(--accent);
+  padding-left:1.2rem;text-align:left;opacity:0;animation:fadeIn .7s 2.1s var(--ease) forwards}
+.ov-epi .cursor{display:inline-block;width:.55ch;background:var(--accent);animation:blink 1s steps(1) infinite}
+.ov-cite{display:block;margin-top:.65rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
+  color:var(--muted);text-transform:uppercase}
+.ov-enter{margin-top:2.9rem;background:transparent;border:1px solid var(--accent);color:var(--accent);
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.36em;padding:1rem 3rem;cursor:pointer;
+  text-transform:uppercase;opacity:0;animation:fadeUp .8s 3.2s var(--ease) forwards;position:relative;overflow:hidden}
+.ov-enter span{position:relative;z-index:2;transition:color .35s}
+.ov-enter::before{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleX(0);
+  transform-origin:left;transition:transform .45s var(--ease)}
+.ov-enter:hover::before{transform:scaleX(1)}
+.ov-enter:hover span{color:var(--void)}
+.ov-meta{margin-top:1.5rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;color:var(--muted);
+  opacity:0;animation:fadeIn 1s 3.6s var(--ease) forwards}
+
+/* ---------- shell ---------- */
+#app{position:relative;z-index:10;opacity:0;pointer-events:none;transition:opacity .8s var(--ease)}
+body.in-app #app{opacity:1;pointer-events:auto}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;
+  padding:.62rem 1.3rem;background:rgba(7,7,11,.84);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.75rem;cursor:pointer;flex:0 0 auto}
+.brand-mark{width:30px;height:30px;border:1px solid var(--accent);border-radius:3px;display:grid;place-items:center;
+  color:var(--accent);font-family:var(--mono);font-size:.62rem;transition:transform .5s var(--ease-back)}
+.brand:hover .brand-mark{transform:rotate(135deg)}
+.brand-txt strong{display:block;font-family:var(--serif);font-size:1.05rem;letter-spacing:.15em;font-weight:600}
+.brand-txt small{display:block;font-family:var(--mono);font-size:.53rem;letter-spacing:.16em;color:var(--muted)}
+.nav{display:flex;gap:.12rem;flex:1 1 auto;min-width:0;justify-content:center;flex-wrap:wrap}
+.nav-btn{position:relative;background:none;border:none;color:var(--text-2);font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.09em;padding:.5rem .7rem;cursor:pointer;border-radius:3px;transition:color .25s,background .25s}
+.nav-btn .k{position:absolute;top:-2px;right:1px;font-size:.48rem;color:var(--muted);opacity:.65}
+.nav-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.nav-btn.active{color:var(--accent);background:rgba(230,197,71,.1)}
+.nav-btn.active::after{content:'';position:absolute;left:.5rem;right:.5rem;bottom:1px;height:1px;background:var(--accent)}
+.tools{display:flex;align-items:center;gap:.55rem;flex:0 0 auto}
+.discovery{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;color:var(--muted)}
+.disc-bar{width:74px;height:3px;background:rgba(255,255,255,.09);border-radius:2px;overflow:hidden}
+.disc-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent-2),var(--accent));
+  transition:width .8s var(--ease-back);box-shadow:0 0 8px rgba(230,197,71,.6)}
+.disc-num{color:var(--accent);font-weight:700}
+.tbtn{background:transparent;border:1px solid var(--line-2);color:var(--text-2);font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.12em;padding:.42rem .66rem;border-radius:3px;cursor:pointer;transition:all .25s;text-transform:uppercase}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.on{border-color:var(--accent);color:var(--void);background:var(--accent)}
+.tbtn:active{transform:translateY(1px) scale(.98)}
+
+/* ---------- views ---------- */
+.stage{max-width:1280px;margin:0 auto;padding:2rem 1.4rem 5rem}
+.view{display:none}
+.view.active{display:block}
+.view.active .vh{animation:slideUp .65s var(--ease) both}
+.vh{padding-bottom:.9rem;border-bottom:1px solid var(--line);margin-bottom:1.1rem;
+  display:grid;grid-template-columns:minmax(240px,.9fr) minmax(260px,1.4fr);gap:.2rem 2.2rem;align-items:end}
+.vh .idx{grid-column:1/-1;font-family:var(--mono);font-size:.58rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.6rem}
+.vh h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.2vw,2.4rem);margin:0 0 .3rem;letter-spacing:.01em;align-self:end;line-height:1.1}
+.vh p{margin:0;color:var(--text-2);max-width:72ch;font-size:.9rem;line-height:1.58;align-self:end;padding-bottom:.3rem}
+@media(max-width:820px){.vh{grid-template-columns:1fr}}
+
+/* source tags */
+.src{font-family:var(--mono);font-size:.57rem;letter-spacing:.06em;color:var(--muted);display:block;margin:-.15rem 0 .5rem}
+
+/* every named thing is a link */
+.lk{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(230,197,71,.55);cursor:pointer;transition:color .2s,border-color .2s}
+.lk:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.lk.ch{font-weight:600}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;backdrop-filter:blur(11px)}
+.pad{padding:1.4rem}
+.scene{position:relative;height:min(68vh,640px);border-radius:13px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.scene canvas{display:block;width:100%;height:100%;touch-action:none}
+.scene-foot{display:flex;align-items:center;justify-content:flex-start;gap:1rem;flex-wrap:wrap;
+  padding:.85rem 1.15rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:.64rem;color:var(--muted)}
+.scene-wrap{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.scene-wrap .scene{border:none;border-radius:0}
+.ctl{display:flex;gap:.45rem;flex-wrap:wrap}
+.legend{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:center;padding:.65rem 1.15rem;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:.62rem;color:var(--text-2);line-height:1.5}
+.legend i{display:inline-block;vertical-align:middle;margin-right:.4rem;border-radius:50%}
+.legend .big{width:14px;height:14px;background:var(--accent)}
+.legend .small{width:8px;height:8px;background:var(--accent)}
+.legend .hollow{width:10px;height:10px;border:1.5px solid var(--accent);background:transparent}
+.legend .edge{width:18px;height:0;border-top:1px solid rgba(230,197,71,.8);border-radius:0;vertical-align:middle}
+
+/* chapter labels: DOM, ranked, clickable */
+.lbl-layer{position:absolute;inset:0;pointer-events:none;z-index:6}
+.ch-lbl{position:absolute;left:14px;pointer-events:auto;cursor:pointer;transform:translateY(-50%);
+  padding:.25rem .5rem .3rem;border-radius:5px;border:1px solid transparent;transition:background .2s,border-color .2s,opacity .3s;
+  max-width:calc(var(--gw) - 20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch-lbl b{display:block;font-family:var(--serif);font-weight:700;font-size:1.12rem;line-height:1.1;letter-spacing:.01em;color:var(--c);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-lbl small{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--text-2);margin-top:.15rem;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-lbl small em{font-style:normal;color:var(--muted)}
+.ch-lbl:hover,.ch-lbl.active{background:rgba(10,10,15,.85);border-color:color-mix(in srgb,var(--c) 60%,transparent)}
+.ch-lbl.active b{text-shadow:0 0 14px color-mix(in srgb,var(--c) 70%,transparent)}
+.ch-lbl.dim{opacity:.55}
+.ch-lbl.ep b{font-weight:500;font-style:italic}
+.lead{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+.spine-lbl{position:absolute;pointer-events:auto;cursor:pointer;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;
+  color:var(--accent);text-transform:uppercase;padding:.2rem .45rem;border-radius:4px;transform:translate(-50%,-50%);white-space:nowrap;
+  border:1px solid transparent;transition:border-color .2s,background .2s}
+.spine-lbl:hover{background:rgba(10,10,15,.85);border-color:rgba(230,197,71,.5)}
+
+/* hover card */
+.hovercard{position:absolute;pointer-events:none;z-index:12;background:rgba(10,10,15,.95);
+  border:1px solid var(--line-2);border-left:2px solid var(--accent);border-radius:7px;padding:.65rem .85rem;
+  max-width:300px;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .18s;backdrop-filter:blur(8px)}
+.hovercard.show{opacity:1;transform:translateY(0)}
+.hovercard b{display:block;font-family:var(--serif);font-size:1.08rem;font-weight:600}
+.hovercard i{display:block;font-family:var(--mono);font-size:.58rem;color:var(--accent);font-style:normal;letter-spacing:.1em;margin:.2rem 0 .35rem}
+.hovercard span{font-size:.78rem;color:var(--text-2);line-height:1.5;display:block}
+.hovercard .src{margin-top:.35rem;font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:.06em}
+
+/* ---------- cards ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:1.15rem;
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;position:relative;overflow:hidden;cursor:pointer}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease)}
+.card:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.card:hover::before{transform:scaleY(1)}
+.card h4{margin:0 0 .2rem;font-family:var(--serif);font-size:1.32rem;font-weight:600}
+.card .meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.11em;color:var(--accent);margin-bottom:.6rem}
+.card p{margin:0;font-size:.86rem;line-height:1.62;color:var(--text-2)}
+.card .weight{margin-top:.7rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.56rem;letter-spacing:.09em;padding:.24rem .55rem;
+  border:1px solid var(--line-2);border-radius:99px;color:var(--text-2);margin:.25rem .25rem 0 0;cursor:pointer;transition:all .2s}
+.tag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* chapters accordion: chapter is the major topic */
+.ch{background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-bottom:.7rem;overflow:hidden;transition:border-color .3s}
+.ch.open{border-color:var(--accent)}
+.ch-hd{display:flex;align-items:center;gap:1.1rem;padding:1.1rem 1.3rem;cursor:pointer}
+.ch-n{width:42px;height:42px;flex:0 0 auto;display:grid;place-items:center;border-radius:7px;
+  font-family:var(--mono);font-size:1rem;font-weight:700;transition:transform .45s var(--ease-back)}
+.ch.open .ch-n{transform:rotate(360deg) scale(1.06)}
+.ch-t{flex:1;min-width:0}
+.ch-t b{display:block;font-family:var(--serif);font-size:clamp(1.35rem,2.4vw,1.75rem);font-weight:700;line-height:1.15}
+.ch-t small{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.12em;display:block;margin-top:.25rem}
+.ch-x{color:var(--accent);transition:transform .4s var(--ease);font-size:1.1rem}
+.ch.open .ch-x{transform:rotate(180deg)}
+.ch-bd{max-height:0;overflow:hidden;transition:max-height .55s var(--ease)}
+.ch.open .ch-bd{max-height:1200px}
+.ch-in{padding:0 1.3rem 1.3rem 1.3rem;font-size:.9rem;line-height:1.7;color:var(--text-2)}
+.ch-in h5{font-family:var(--mono);font-size:.56rem;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin:1rem 0 .35rem}
+.ch-in p{margin:0 0 .5rem}
+.ch-in .novels{margin-top:.6rem}
+.ch-in .novels .tag{font-family:var(--serif);font-size:.95rem;letter-spacing:0;padding:.35rem .75rem;text-transform:none}
+
+/* sources */
+.srcrow{display:grid;grid-template-columns:minmax(180px,1fr) 2.2fr;gap:.6rem 1.4rem;padding:.8rem 0;border-bottom:1px solid var(--line);font-size:.86rem;line-height:1.6;color:var(--text-2)}
+.srcrow b{font-family:var(--serif);font-size:1.1rem;color:var(--text);font-weight:600}
+.srcrow .m{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.08em;display:block;margin-top:.2rem}
+@media(max-width:700px){.srcrow{grid-template-columns:1fr}}
+
+/* console */
+#console{position:fixed;right:1.1rem;bottom:1.1rem;width:min(380px,88vw);z-index:35;
+  background:rgba(8,8,12,.96);border:1px solid var(--line-2);border-radius:11px;overflow:hidden;
+  transform:translateY(calc(100% + 2rem));transition:transform .5s var(--ease);backdrop-filter:blur(14px)}
+#console.open{transform:translateY(0)}
+.con-hd{display:flex;justify-content:space-between;align-items:center;padding:.55rem .85rem;
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--accent)}
+.con-hd button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1}
+.con-bd{max-height:290px;overflow-y:auto;padding:.85rem;font-family:var(--mono);font-size:.7rem;line-height:1.75}
+.con-line{margin-bottom:.55rem;color:var(--text-2)}
+.con-line .u{color:var(--accent)}
+.con-in{display:flex;border-top:1px solid var(--line)}
+.con-in input{flex:1;background:none;border:none;color:var(--text);font-family:var(--mono);font-size:.72rem;padding:.7rem .85rem;outline:none}
+.con-in button{background:none;border:none;border-left:1px solid var(--line);color:var(--accent);font-family:var(--mono);font-size:.62rem;padding:0 .95rem;cursor:pointer}
+
+/* toast */
+#toast{position:fixed;top:4.6rem;left:50%;transform:translate(-50%,-24px);z-index:50;opacity:0;
+  background:rgba(10,10,15,.97);border:1px solid var(--accent);border-radius:9px;padding:.75rem 1.2rem;
+  display:flex;gap:.75rem;align-items:center;transition:opacity .4s,transform .5s var(--ease-back);pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast .ic{font-size:1.2rem}
+#toast b{display:block;font-family:var(--mono);font-size:.54rem;letter-spacing:.22em;color:var(--accent)}
+#toast span{font-family:var(--serif);font-size:1rem}
+
+/* drawer: the record */
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(500px,94vw);z-index:45;background:rgba(9,9,13,.985);
+  border-left:1px solid var(--line-2);transform:translateX(100%);transition:transform .55s var(--ease);overflow-y:auto;backdrop-filter:blur(16px)}
+#drawer.open{transform:translateX(0)}
+.dw-hd{position:sticky;top:0;background:rgba(9,9,13,.985);padding:1.3rem 1.4rem 1rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;z-index:2}
+.dw-hd h3{margin:0;font-family:var(--serif);font-size:1.75rem;font-weight:600;line-height:1.1}
+.dw-hd .cl{background:none;border:none;color:var(--muted);font-size:1.6rem;cursor:pointer;line-height:1}
+.dw-bd{padding:1.2rem 1.4rem 3rem;font-size:.9rem;line-height:1.72;color:var(--text-2)}
+.dw-bd h5{font-family:var(--mono);font-size:.56rem;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin:1.35rem 0 .45rem}
+.dw-bd h5:first-child{margin-top:0}
+.dw-bd p{margin:0 0 .6rem}
+.dw-bd .rec{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;color:var(--text);line-height:1.8}
+.dw-bd blockquote{margin:.4rem 0 .8rem;padding:.6rem .9rem;border-left:2px solid var(--accent);background:rgba(230,197,71,.05);
+  font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--text);line-height:1.5}
+.dw-bd blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-size:.55rem;letter-spacing:.14em;color:var(--muted);margin-top:.4rem}
+.dw-bd .src{font-family:var(--mono);font-size:.57rem;letter-spacing:.06em;color:var(--muted);margin-top:.15rem;display:block}
+.dw-bd .rel{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.dw-bd .rel .to{flex:0 0 auto;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);min-width:9ch}
+.dw-bd .rel .why{font-size:.82rem;line-height:1.5}
+.dw-bd .weight{display:flex;align-items:center;gap:.7rem;padding:.55rem .8rem;border:1px solid var(--line);border-radius:8px;margin:.3rem 0 .2rem;font-size:.8rem}
+.dw-bd .weight i{flex:0 0 auto;border-radius:50%;background:var(--c,#e6c547)}
+.dw-bd .weight i.hollow{background:transparent;border:1.5px solid var(--c,#e6c547)}
+.dw-bd .chip{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;padding:.28rem .6rem;border-radius:4px;margin:.2rem 0 .4rem;cursor:pointer;border:1px solid transparent}
+.dw-bd .chip:hover{border-color:currentColor}
+
+/* stagger */
+.stag{opacity:0;transform:translateY(22px)}
+.stag.in{animation:cardRise .62s var(--ease) forwards}
+input[type=range]{-webkit-appearance:none;appearance:none;height:3px;background:rgba(255,255,255,.12);border-radius:2px;outline:none;width:100%}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 12px rgba(230,197,71,.7)}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;border:none;border-radius:50%;background:var(--accent);cursor:pointer}
+footer{text-align:center;padding:2.4rem 1rem 3rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--muted);border-top:1px solid var(--line)}
+
+@keyframes fadeIn{to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes ltrIn{to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes ruleGrow{to{width:min(420px,72vw)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes cardRise{to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:0}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(230,197,71,.45)}70%{box-shadow:0 0 0 14px rgba(230,197,71,0)}100%{box-shadow:0 0 0 0 rgba(230,197,71,0)}}
+@keyframes hitFlash{0%{box-shadow:0 0 0 0 rgba(230,197,71,.7)}100%{box-shadow:0 0 0 22px rgba(230,197,71,0)}}
+.scene.hit{animation:hitFlash .5s var(--ease)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}
+  .stag,.ov-title .ltr,.ov-sub,.ov-enter,.ov-kicker,.ov-meta,.ov-epi{opacity:1!important;transform:none!important;filter:none!important}
+  .ov-rule{width:min(420px,72vw)!important}
+}
+@media print{
+  @page{margin:14mm}
+  body{background:#fff!important;color:#000!important}
+  #bg-gl,#grain,#vignette,#console,#drawer,#toast,.topbar,.ov-enter,#overture,.scene,.ctl,.tbtn,.discovery,.hovercard,.legend{display:none!important}
+  #app{opacity:1!important;pointer-events:auto!important}
+  .stage{max-width:none;padding:0}
+  .scene-wrap{display:none!important}
+  .view{display:block!important}
+  #v-chapters,#v-corpus,#v-sources{page-break-before:always;break-before:page}
+  .stag{opacity:1!important;transform:none!important;animation:none!important}
+  .panel,.card,.ch,.scene-wrap,.scene-foot{background:#fff!important;border-color:#c4c4c4!important;color:#000!important;box-shadow:none!important;backdrop-filter:none!important}
+  .vh h2,.card h4,.ch-t b,.srcrow b{color:#000!important}
+  .fl-ch,.fl-nv button{background:#fff!important;color:#000!important;border-color:#c4c4c4!important;box-shadow:none!important}
+  .fl-ch b,.fl-ch small,.fl-rail,.fl-rail b,.fl-arrow em{color:#333!important}
+  .fl-br,.fl-arrow i{background:#c4c4c4!important;border-color:#c4c4c4!important}
+  .vh p,.card p,.ch-in,.srcrow{color:#333!important}
+  .ch-bd{max-height:none!important;overflow:visible!important}
+  .lk{border-bottom:none!important;color:#000!important}
+  footer{color:#555!important;border-color:#ccc!important}
+}
+@media(max-width:640px){
+  .ov-kicker{letter-spacing:.28em;margin-bottom:1.2rem;font-size:.56rem}
+  .ov-rule{margin:1.1rem 0 1rem}
+  .ov-epi{margin-top:1.3rem;padding-left:.9rem;font-size:1rem}
+  .ov-enter{margin-top:1.6rem;padding:.85rem 1.8rem;letter-spacing:.26em}
+  .ov-meta{margin-top:1rem;font-size:.5rem;letter-spacing:.12em}
+  .ov-sub{font-size:.95rem}
+  .ch-lbl b{font-size:.92rem}
+}
+@media(max-width:760px){
+  .nav{order:3;flex:1 0 100%;width:100%;justify-content:flex-start;flex-wrap:wrap;gap:.08rem}
+  .tools{order:2;flex:1 0 100%;width:100%;justify-content:space-between;gap:.35rem;flex-wrap:wrap}
+  .brand{order:1}
+  .nav-btn{font-size:.62rem;padding:.36rem .46rem}
+  .nav-btn .k{display:none}
+  .topbar{padding:.5rem .8rem;gap:.6rem}
+  .brand-txt small{display:none}
+  .stage{padding:1.4rem .9rem 4rem}
+  .scene{height:54vh}
+}
+
+/* ================= type scale and record layout (Oct 2026) ================= */
+html{font-size:17px}
+@media(min-width:1400px){html{font-size:18px}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+#drawer{top:var(--tb,58px);width:var(--dw)}
+.stage{transition:margin .55s var(--ease),max-width .55s var(--ease)}
+@media(min-width:1100px){
+  body.dw-open .stage{margin-left:auto;margin-right:var(--dw);max-width:min(1280px,calc(100vw - var(--dw)))}
+  body.dw-open #console{right:calc(var(--dw) + 1.1rem)}
+}
+.brand-txt strong{font-size:1.18rem}
+.brand-txt small{font-size:.6rem}
+.nav-btn{font-size:.84rem}
+.tbtn{font-size:.7rem}
+.discovery{font-size:.72rem}
+.vh .idx{font-size:.7rem}
+.vh h2{font-size:clamp(2rem,3.6vw,2.9rem)}
+.vh p{font-size:1.04rem;line-height:1.6}
+.src{font-size:.68rem}
+.legend{font-size:.74rem}
+.scene-foot{font-size:.74rem}
+.ch-lbl b{font-size:1.3rem}
+.ch-lbl small{font-size:.7rem}
+#arcLabels .ch-lbl b{font-size:1.04rem}
+.scene.narrow .ch-lbl b{font-size:.98rem}
+.scene.narrow .ch-lbl small{font-size:.62rem}
+.topbar{gap:.7rem;padding:.55rem 1.1rem}
+.nav-btn{font-size:.8rem;padding:.45rem .55rem}
+.tbtn{padding:.4rem .55rem}
+@media(max-width:1399px){.brand-txt small{display:none}.brand-txt strong{letter-spacing:.11em}.topbar{gap:.5rem;padding:.55rem .85rem}.tbtn{font-size:.66rem;padding:.4rem .48rem;letter-spacing:.1em}.nav-btn{padding:.45rem .48rem}.disc-bar{width:56px}}
+.spine-lbl{font-size:.72rem}
+.hovercard{max-width:340px}
+.hovercard b{font-size:1.28rem}
+.hovercard i{font-size:.68rem}
+.hovercard span{font-size:.92rem}
+.hovercard .src{font-size:.64rem}
+.card h4{font-size:1.55rem}
+.card .meta{font-size:.7rem}
+.card p{font-size:1rem}
+.card .weight{font-size:.68rem}
+.tag{font-size:.68rem}
+.ch-t b{font-size:clamp(1.6rem,2.8vw,2.1rem)}
+.ch-t small{font-size:.72rem}
+.ch-in{font-size:1.04rem}
+.ch-in h5{font-size:.7rem}
+.ch-in .novels .tag{font-size:1.08rem}
+.srcrow{font-size:1rem}
+.srcrow b{font-size:1.25rem}
+.srcrow .m{font-size:.68rem}
+.con-hd{font-size:.7rem}
+.con-bd{font-size:.8rem}
+.con-in input{font-size:.84rem}
+#toast b{font-size:.64rem}
+#toast span{font-size:1.15rem}
+.dw-hd h3{font-size:2.15rem}
+.dw-bd{font-size:1.06rem;line-height:1.66}
+.dw-bd h5{font-size:.7rem}
+.dw-bd .rec{font-size:.76rem}
+.dw-bd .chip{font-size:.68rem}
+.dw-bd .src{font-size:.68rem}
+.dw-bd blockquote{font-size:1.24rem}
+.dw-bd blockquote cite{font-size:.64rem}
+.dw-bd .rel .to{font-size:1.14rem}
+.dw-bd .rel .why{font-size:.95rem}
+.dw-bd .weight{font-size:.92rem}
+.ov-kicker{font-size:.74rem}
+.ov-cite{font-size:.68rem}
+.ov-meta{font-size:.66rem}
+@media(max-width:640px){
+  html{font-size:16px}
+  .ch-lbl b{font-size:1rem;white-space:normal;line-height:1.05}
+  .ch-lbl{white-space:normal}
+  .ov-kicker{font-size:.6rem}
+  .ov-meta{font-size:.56rem}
+}
+
+/* flowchart: static, no motion */
+.flow{max-width:1000px;margin:.6rem auto 2.5rem}
+.fl-rail{display:flex;justify-content:space-between;align-items:baseline;max-width:760px;margin:0 auto 1.4rem;padding:0 .4rem .8rem;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+.fl-rail b{color:var(--accent);font-weight:500}
+.fl-row{display:grid;grid-template-columns:300px 36px 1fr;align-items:center}
+.fl-ch{display:flex;align-items:center;gap:.85rem;text-align:left;width:100%;cursor:pointer;color:var(--text);
+  background:var(--panel);border:1.5px solid var(--c);border-radius:14px;padding:.8rem 1rem;font:inherit}
+.fl-ch:hover{background:var(--panel-2);box-shadow:0 0 0 1px var(--c)}
+.fl-ch .n{flex:0 0 2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#0b0b10;
+  font-family:var(--mono);font-weight:700;font-size:.95rem}
+.fl-ch b{display:block;font-family:var(--serif);font-weight:600;font-size:1.32rem;line-height:1.1;color:var(--c)}
+.fl-ch small{display:block;margin-top:.2rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--muted)}
+.fl-br{height:0;border-top:1.5px solid var(--line-2)}
+.fl-nv{display:flex;flex-wrap:wrap;gap:.45rem}
+.fl-nv button{font-family:var(--read);font-size:1rem;color:var(--text);background:transparent;cursor:pointer;
+  border:1px solid var(--c);border-radius:999px;padding:.38rem .85rem}
+.fl-nv button.hollow{border-style:dashed}
+.fl-nv button:hover,.fl-nv button.on{background:rgba(255,255,255,.07)}
+.fl-nv button.rel{background:rgba(230,197,71,.16);box-shadow:0 0 0 2px var(--accent)}
+.fl-arrow{position:relative;display:flex;align-items:center;width:300px;height:46px}
+.fl-arrow i{position:absolute;left:50%;top:0;bottom:0;width:1.5px;background:var(--line-2)}
+.fl-arrow em{margin-left:calc(50% + 14px)}
+.fl-arrow i::after{content:"";position:absolute;left:-4.5px;bottom:-1px;border:5px solid transparent;border-top:7px solid var(--line-2);border-bottom:0}
+.fl-arrow em{font-style:normal;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+/* chapter subtitles and book-frame rows (Oct 2026) */
+.fl-ch .sub{display:block;font-family:var(--serif);font-style:italic;font-size:1.02rem;line-height:1.2;color:var(--text-2);margin-top:.15rem}
+.fl-frame .fl-ch{cursor:default;border-style:dashed}
+.fl-frame .fl-ch:hover{background:var(--panel);box-shadow:none}
+.ch-t .sub{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,1.8vw,1.3rem);color:var(--text-2);margin-top:.1rem}
+.ch-frame .ch-hd{cursor:default}
+@media print{.fl-ch .sub,.ch-t .sub{color:#333!important}}
+@media(max-width:760px){
+  .fl-row{grid-template-columns:1fr}.fl-br{display:none}.fl-nv{padding:.6rem 0 0 .3rem}
+  .fl-arrow{width:100%}
+}
+
+/* ================= Book view (Oct 2026) =================
+   Layout: each chapter is a row, its heading and imagined threat in a left column,
+   its novels as text boxes on the right; frame bands mark the Introduction and the
+   Conclusion. Everything is static; hover changes colour only. */
+.bk{display:flex;flex-direction:column}
+.bk-band{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:1.9rem 0 1.6rem;text-align:center;border-top:1px solid var(--line)}
+.bk-band small{font-family:var(--mono);font-size:.7rem;letter-spacing:.32em;color:var(--accent);text-transform:uppercase}
+.bk-band b{font-family:var(--serif);font-weight:500;font-style:italic;font-size:clamp(1.5rem,2.8vw,2.1rem);line-height:1.15;color:var(--text);text-wrap:balance}
+.bk>.bk-band:first-child{border-top:0;padding-top:.9rem}
+.bk-frame{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:1rem;padding-bottom:2rem}
+.bk-an{display:flex;flex-direction:column;gap:.4rem;background:var(--panel);border:1px solid var(--line-2);border-radius:4px;padding:1.15rem 1.3rem 1.1rem;cursor:pointer;transition:border-color .2s,background .2s}
+.bk-an:hover,.bk-an:focus-visible{border-color:var(--accent);background:var(--panel-2)}
+.bk-an small{font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;color:var(--accent);text-transform:uppercase}
+.bk-an b{font-family:var(--serif);font-weight:600;font-size:1.5rem;line-height:1.12;color:var(--text)}
+.bk-an p{margin:0;font-size:1rem;line-height:1.58;color:var(--text-2);max-width:62ch}
+.bk-an .src{margin:.1rem 0 0}
+.bk-ch{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:1.4rem 2.4rem;padding:2.1rem 0 2.3rem;border-top:1px solid var(--line)}
+.bk-side{min-width:0}
+.bk-hd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 1rem;align-items:start;width:100%;padding:0;margin:0;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.bk-num{font-family:var(--serif);font-weight:300;font-size:3.7rem;line-height:.82;color:var(--c);font-variant-numeric:lining-nums}
+.bk-kick{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.bk-hd h3{margin:.3rem 0 0;font-family:var(--serif);font-weight:600;font-size:clamp(1.55rem,2.4vw,2rem);line-height:1.08;color:var(--c);text-wrap:balance}
+.bk-sub{display:block;margin-top:.25rem;font-family:var(--serif);font-style:italic;font-size:1.15rem;line-height:1.25;color:var(--text-2)}
+.bk-hd:hover h3,.bk-hd:focus-visible h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.bk-lede{margin:1.1rem 0 0;font-size:1rem;line-height:1.62;color:var(--text-2);max-width:60ch}
+.bk-side .src{margin-top:.35rem}
+.bk-go{margin-top:.75rem;padding:0;background:none;border:0;cursor:pointer;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--c);text-transform:uppercase}
+.bk-go:hover{color:var(--text)}
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,265px),1fr));gap:1rem;align-content:start;min-width:0}
+.bk-nv{display:flex;flex-direction:column;min-width:0;background:var(--panel);border:1px solid var(--line-2);border-top:2px solid var(--c);border-radius:4px;padding:1rem 1.15rem 1.05rem;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.bk-nv:hover,.bk-nv:focus-visible{border-color:var(--c);background:var(--panel-2)}
+.bk-nv.on{box-shadow:0 0 0 1px var(--c)}
+.bk-nv.hollow{border-style:dashed}
+.bk-top{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.bk-yr{font-family:var(--mono);font-weight:500;font-size:1.05rem;letter-spacing:.05em;color:var(--c);font-variant-numeric:tabular-nums}
+.bk-rd{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;text-align:right}
+.bk-seen{display:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.bk-nv.seen .bk-seen{display:inline}
+.bk-nv h4{margin:.45rem 0 0;font-family:var(--serif);font-weight:600;font-size:1.45rem;line-height:1.12;color:var(--text);text-wrap:balance}
+.bk-heb{margin-top:.1rem;font-family:var(--serif);font-style:italic;font-size:1.02rem;color:var(--muted)}
+.bk-by{margin-top:.45rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--text);text-transform:uppercase}
+.bk-pub{margin-top:.15rem;font-size:.86rem;color:var(--muted)}
+.bk-nv p{margin:.6rem 0 0;font-size:.98rem;line-height:1.56;color:var(--text-2)}
+.bk-rel{margin-top:auto;padding-top:.75rem}
+.bk-rel div{border-top:1px solid var(--line);padding-top:.55rem;font-size:.9rem;line-height:1.5;color:var(--muted)}
+.bk-rel em{font-style:normal;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;margin-right:.35rem}
+@media(max-width:900px){.bk-ch{grid-template-columns:1fr;gap:1.1rem}.bk-num{font-size:3rem}}
+@media print{
+  .bk-an,.bk-nv{background:#fff!important;border-color:#c4c4c4!important;box-shadow:none!important;break-inside:avoid}
+  .bk-an b,.bk-nv h4,.bk-hd h3,.bk-band b{color:#000!important}
+  .bk-an p,.bk-nv p,.bk-lede,.bk-sub,.bk-heb,.bk-pub,.bk-by,.bk-rel div,.bk-kick,.bk-rd{color:#333!important}
+  .bk-go{display:none!important}
+}
+</style>
+</head>
+<body>
+
+
+<div id="grain"></div><div id="vignette"></div>
+
+<!-- ============ OVERTURE ============ -->
+<section id="overture">
+  <div class="ov-kicker">Hebrew Literature from Herzl to Gaza</div>
+  <h1 class="ov-title" id="ovTitle"></h1>
+  <div class="ov-rule"></div>
+  <div class="ov-sub" id="ovSub"></div>
+  <div class="ov-epi"><span id="ovType"></span><span class="cursor">&nbsp;</span>
+    <span class="ov-cite" id="ovCite"></span></div>
+  <button class="ov-enter" id="enterBtn"><span>Open the book</span></button>
+  <div class="ov-meta">Itay Eisinger · Lecturer in Hebrew · University of California, Davis</div>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header class="topbar">
+    <div class="brand" id="homeBtn" title="Back to the overture">
+      <div class="brand-mark">◈</div>
+      <div class="brand-txt"><strong>UTOPIA UNDONE</strong><small>from 1984 · book companion</small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="tools">
+      <div class="discovery" title="Novels opened">
+        <div class="disc-bar"><div class="disc-fill" id="discFill"></div></div>
+        <span class="disc-num" id="discNum">0</span><span id="discTotal"></span>
+      </div>
+      <button class="tbtn on" id="sndBtn" title="Sound on or off">Sound</button>
+      <button class="tbtn" id="conBtn">Console</button>
+      <button class="tbtn" id="hcBtn" title="High contrast">Contrast</button>
+      <button class="tbtn" id="prBtn" title="Print or export to PDF">Print</button>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <!-- BOOK: each chapter beside its novels, as text boxes -->
+    <section class="view" id="v-book">
+      <div class="vh"><span class="idx">01 · The book</span>
+        <h2>Chapter by chapter</h2>
+        <p id="bookIntro"></p>
+      </div>
+      <div class="bk" id="bookWrap"></div>
+    </section>
+
+    <!-- FLOWCHART -->
+    <section class="view" id="v-flow">
+      <div class="vh"><span class="idx">02 · Flowchart</span>
+        <h2>The book in order</h2>
+        <p id="flowIntro"></p>
+      </div>
+      <div class="flow" id="flowChart"></div>
+    </section>
+
+    <!-- ARC -->
+    <section class="view" id="v-arc">
+      <div class="vh"><span class="idx">03 · Timeline</span>
+        <h2>From warning to testimony</h2>
+        <p id="arcIntro"></p>
+      </div>
+      <div class="scene-wrap">
+        <div class="scene" style="height:min(58vh,480px)"><canvas id="arcCanvas"></canvas>
+          <div class="lbl-layer" id="arcLabels"></div>
+          <div class="hovercard" id="arcHover"></div></div>
+        <div class="scene-foot">
+          <div class="ctl"><button class="tbtn" id="arcReplay">Replay entrance</button></div></div>
+      </div>
+    </section>
+
+    <!-- CHAPTERS -->
+    <section class="view" id="v-chapters">
+      <div class="vh"><span class="idx">04 · Chapters</span>
+        <h2>The chapters in full</h2>
+        <p id="chIntro"></p>
+      </div>
+      <div id="chList"></div>
+    </section>
+
+    <!-- CORPUS -->
+    <section class="view" id="v-corpus">
+      <div class="vh"><span class="idx">05 · The corpus</span>
+        <h2 id="corpusH2"></h2>
+        <p id="corpusIntro"></p>
+      </div>
+      <div class="grid-2" id="corpusGrid"></div>
+    </section>
+
+    <!-- SOURCES -->
+    <section class="view" id="v-sources">
+      <div class="vh"><span class="idx">06 · Sources</span>
+        <h2>Where every sentence comes from</h2>
+        <p id="srcIntro"></p>
+      </div>
+      <div class="panel pad" id="srcWrap"></div>
+    </section>
+
+  </main>
+  <footer>Itay Eisinger · Lecturer in Hebrew · University of California, Davis · Utopia Undone, University of Pennsylvania Press</footer>
+</div>
+
+<div id="console">
+  <div class="con-hd"><span>◈ READING CONSOLE</span><button id="conClose">×</button></div>
+  <div class="con-bd" id="conBody"></div>
+  <div class="con-in"><input id="conInput" placeholder="ask: kenan, kashua, 1984, falah, conclusion…" autocomplete="off"><button id="conSend">RUN</button></div>
+</div>
+<aside id="drawer"><div class="dw-hd"><h3 id="dwTitle"></h3><button class="cl" id="dwClose">×</button></div>
+  <div class="dw-bd" id="dwBody"></div></aside>
+<div id="toast"><div class="ic" id="toastIc">◈</div><div><b id="toastKind">UNLOCKED</b><span id="toastMsg"></span></div></div>
+
+<script>
+(function(){
+"use strict";
+/* ============================================================
+   DATA · every sentence below is drawn from one of four texts
+   D  = Eisinger, The Dystopian Turn in Hebrew Literature (UT Austin, 2019); page numbers as printed
+   P  = Utopia Undone book proposal, July 2026 draft
+   I  = Utopia Undone book proposal, earlier "To Isis" draft
+   V  = Utopia Undone proposal v33 (structure, chapter titles, dates, publishers)
+   Quotations from the novels are given as the dissertation quotes them, with its page.
+   ============================================================ */
+
+const EPIGRAPH = {
+  text: "Modern Hebrew literature wrote a nation into being; now it documents that nation's unraveling.",
+  cite: "Proposal, opening line (To Isis draft)"
+};
+
+const CHAPTERS = [
+  { num:1, title:"Early Warning", sub:"From 1948 to 1984", years:"1984–1987", y0:1984, y1:1987, color:"#c9843a", hex:0xc9843a,
+    context:"Likud's rise in 1977, the 1982 Lebanon War, and Gush Emunim's settlement expansion converged in the early 1980s to produce a crisis on the Israeli left: military entanglement, political defeat, and a perceived change in the national character. In 1984 two novelists, both veterans of the 1948 war, published Hebrew novels about the self-destruction of the Jewish state.",
+    contextSrc:"P, Ch. One",
+    threat:"In <i>The Road to Ein Harod</i>, a fascist regime expels its Arab citizens and hunts down its liberal Jewish Zionist critics. In <i>Jeremiah's Inn</i>, an ultra-Orthodox Sanhedrin establishes a theocratic regime that also expels Arab citizens and turns on secular liberal dissenters. At the beginning of each novel, the Arabs have already been expelled.",
+    threatSrc:"P, Ch. One and Full Description",
+    argument:"These first Hebrew dystopias established paradigms for much twenty-first-century writing in the genre. Formally, one is a thriller and the other a satire; thematically, one is about secular Zionist militarism and the other about Jewish extremism and religion. Fascism and theocracy are the two paradigms that organize the corpus. The chapter documents the melancholy of Labor Zionists who felt personally responsible for Israel's creation and the warnings they issued.",
+    argumentSrc:"I, Ch. 1; V, Ch. 1; P, Ch. One",
+    afterlife:"At least two writers who reviewed the novels, Igal Sarna and Avraham Burg, would in the next century produce dystopian accounts of their own. During the 2011 social protests the first paragraph of Kenan's novel was painted on Tel Aviv walls; a 1990 English-language film adaptation cast Alessandra Mussolini in a leading role.",
+    afterlifeSrc:"P, Ch. One; D, p. 70; V, Ch. 1",
+    novels:["kenan-1984","tammuz-1984","ben-ner-1987"] },
+
+  { num:2, title:"Years of Hope and Terror", sub:"Castel-Bloom and the Dystopian Turn", years:"1992–2002", y0:1992, y1:2002, color:"#5b8fd0", hex:0x5b8fd0,
+    context:"The Oslo years promised peace and normalization, with mutual recognition between Israel and the Palestinians. Waves of violence punctuated the process, and in 1995 Prime Minister Yitzhak Rabin was assassinated by a Jewish zealot. Dreams of normalization and globalization gave way to nightmares about endless conflict.",
+    contextSrc:"P, Ch. Two",
+    threat:"Two dystopian novels by Orly Castel-Bloom, published a decade apart, exemplify the shift. <i>Dolly City</i> imagines Israel after the conflict supposedly ends. <i>Human Parts</i> was the first to depict the terror attacks of the Second Intifada, imagining bus bombings becoming routine. The challenge changes from imagining catastrophe to documenting normalized violence, from speculative warning to present testimony.",
+    threatSrc:"I, Ch. 2; P, Full Description",
+    argument:"These novels raise a question about writing dystopia within dystopia: creating fictional catastrophe while thousands of Israelis experience actual violence. The Second Intifada erupted after Sharon's Temple Mount visit in September 2000, the same Sharon whom Kenan's 1984 dystopia had cast as the fascist general. Fiction's warnings materialized as history. The chapter also engages David Grossman's nonfiction <i>Death as a Way of Life</i> (2003), which documents the same collapse from outside the dystopian genre.",
+    argumentSrc:"I, Ch. 2; P, Ch. Two",
+    afterlife:"The glowing reception of the first novel against the hostile reception of the second, including reviews that categorized <i>Human Parts</i> as realistic rather than dystopian, registers how the decade's crisis entered literary judgment.",
+    afterlifeSrc:"P, Ch. Two; V, Ch. 2",
+    novels:["castel-bloom-1992","castel-bloom-2002"] },
+
+  { num:3, title:"Whose Utopia?", sub:"Sayed Kashua and the Native's Dystopia", years:"2002–2004", y0:2002, y1:2004, color:"#4f9d5d", hex:0x4f9d5d,
+    context:"Following the outbreak of the al-Aqsa intifada in 2000 and Israel's military reoccupation of the West Bank, Israeli-Jewish society turned to the right. A Palestinian citizen of Israel who writes in Hebrew, Sayed Kashua brings a perspective to Arab life in the Jewish state that the rest of the corpus cannot occupy.",
+    contextSrc:"P, Ch. Three; V, Ch. 3",
+    threat:"In <i>Let It Be Morning</i> a peace treaty leads to a curfew on Arab villages and to the denaturalization of Arab Israelis, who are stripped of even their limited civil rights. The conditions of Arab life are already oppressive, even dystopian, and the novel exposes renewed attempts to create a Zionist utopia cleansed of Arabs.",
+    threatSrc:"P, Ch. Three",
+    argument:"Rather than projecting future horrors, Kashua's writing reads as testimony, documenting the oppression of Arabs in real-world Israel and showing that utopian hopes for peace still contain a logic of exclusion. His contribution reframes the field: the dystopian turn of 1984 appears not as a beginning but as belated recognition of conditions Palestinian citizens had long inhabited. What Jewish-Israeli fiction imagined as future threat, Palestinians had already endured under military rule.",
+    argumentSrc:"P, Ch. Three; I, Ch. 3; V, Ch. 3",
+    afterlife:"During the 2014 Israeli onslaught on Gaza, Kashua left Israel for good, renouncing his earlier belief in the plausibility of peace, an exit that shows how closely literature and life intertwined.",
+    afterlifeSrc:"P, Ch. Three",
+    novels:["kashua-2002","kashua-2004"] },
+
+  { num:4, title:"“The Occupation Would Be Forever”", sub:"Dystopias of the Netanyahu Years", titleNote:"The title phrase is Dahlia Falah's, from her poem “Then We Didn’t Know,” in which the speaker predicts that the Occupation would be forever.", titleNoteSrc:"Falah, in With an Iron Pen, ed. Tal Nitzan, trans. Rachel Back (2009), 129; D, Ch. III", years:"2013–2014", y0:2013, y1:2014, color:"#c8503f", hex:0xc8503f,
+    context:"The Netanyahu years consolidated right-wing rule and normalized the occupation as a permanent condition. On the Jewish left this renewed an older fear: that techniques of control developed for the occupied territories would be turned inward, against the citizens of the state that devised them.",
+    contextSrc:"P, Ch. Four",
+    threat:"In these three novels the occupation's methods migrate from exceptional measures to everyday governance, and from use against occupied Palestinians to use against Israel's own Jewish citizens. Surveillance, demographic management and emergency law move from the territories into Tel Aviv apartments.",
+    threatSrc:"P, Ch. Four; I, Ch. 4",
+    argument:"Where earlier Hebrew dystopias remained within national literary boundaries, these works openly invoke Orwell, Huxley, Saramago and McCarthy, placing Israeli collapse within planetary patterns of democratic failure. The dissertation reads the Netanyahu-era novels as stressing the dangers of militarized capitalism, seeing Israeli fascism as the political logic of late surveillance capitalism, and as the fulfilment of Yeshayahu Leibowitz's warning that Israel would become a police state.",
+    argumentSrc:"I, Ch. 4; D, pp. 52, 56, 188",
+    afterlife:"Like Kashua, Sarna would later leave Israel. He suggested that Netanyahu's regime persecuted him in ways the novel had imagined; a libel suit brought by Netanyahu over a Facebook post cost Sarna his newspaper column.",
+    afterlifeSrc:"P, Ch. Four; D, p. 157",
+    novels:["bernstein-2013","mishmari-2013","sarna-2014"] },
+
+  { num:5, title:"Herzl's Warning", sub:"Sarid, Burstein, and the Third Temple", years:"2015–2016", y0:2015, y1:2016, color:"#8f6fc4", hex:0x8f6fc4,
+    context:"By the 2010s messianic settler zealots, recalling Herzl's Dr. Geyer and the theocracy of Tammuz's <i>Jeremiah's Inn</i>, had gained social, political and ideological influence in Israel, marking the end of their pre-1977 marginality.",
+    contextSrc:"P, Ch. Five",
+    threat:"Pseudo-sacred zeal corrupts modern Israel through theocratic capture and prophetic delusion. Ancient texts come to possess contemporary state power: sacrificial rhythms replace civic time, Temple worship overwrites democratic practice, and holiness executes itself through military machinery.",
+    threatSrc:"I, Ch. 5",
+    argument:"Both writers deploy biblical intertextuality to diagnose present pathologies not as a departure from tradition but as its monstrous fulfilment. When the sacred arrives not through divine rupture but through zealous persistence, ritual habit and state violence, salvation inverts into destruction. The chapter reads the novels alongside contemporary theological writings by radical settlers and in relation to the prophetic mode in modern Hebrew literature, the Watchman unto the house of Israel.",
+    argumentSrc:"I, Ch. 5; P, Ch. Five",
+    afterlife:"Two dystopian novels of unusual literary refinement, published within months of each other, both translated into English and recognized with major prizes in Israel and abroad.",
+    afterlifeSrc:"P, Ch. Five",
+    novels:["sarid-2015","burstein-2016"] },
+
+  { num:6, title:"The Shin Bet State", sub:"Big Brother Confesses", years:"2020–2021", y0:2020, y1:2021, color:"#d2603a", hex:0xd2603a,
+    context:"By the late 2010s Yeshayahu Leibowitz's prediction of a secret-police state, like several other early warnings, had materialized. Since Orwell, the secret police have often served as dystopia's oppressive mechanism, their chief the main villain or interrogator. The Israeli case recasts that figure as the author.",
+    contextSrc:"P, Ch. Six",
+    threat:"Jewish-Israeli terrorists attack Arabs and Reform Jews in order to bring about holy war and Armageddon; in the sequel they become government ministers, gain control of the Shin Bet, and use it to oppress secular Jews.",
+    threatSrc:"P, Ch. Six",
+    argument:"Carmi Gillon's novels read as institutional confession and engage Leibowitz's warning, which many in Israel's security establishment came to adopt. When security chiefs write dystopia, fiction becomes testimony: the apparatus speaking its own fears into existence. The chapter uses Gillon's deep-state critique to examine the appointment of Jewish terrorists to Netanyahu's government and their influence on the police and security services.",
+    argumentSrc:"P, Ch. Six; I, Ch. 6",
+    afterlife:"The chapter reads the novels alongside Gillon's public interviews and his testimony in the documentary <i>The Gatekeepers</i>, in which retired Shin Bet directors voiced similar fears in nonfiction form.",
+    afterlifeSrc:"P, Ch. Six",
+    novels:["gillon-2020","gillon-2021"] }
+];
+
+const EPILOGUE = {
+  id:"ep", num:null, title:"Facing Gaza", years:"", y0:2023, y1:2024, color:"#d8cbb0", hex:0xd8cbb0,
+  context:"The epilogue turns to Israeli political culture and the devastation of Gaza. In the wake of those events Israeli novelists, former security chiefs, Gillon among them, former heads of the Mossad, and public intellectuals including Tom Segev, David Ohana and Nurith Gertz came to question whether the Zionist project remained viable or defensible.",
+  contextSrc:"P, Epilogue",
+  argument:"The war in Gaza changed how the archive is read: what reviewers once dismissed as exaggeration or pessimism now reads as institutional description. The epilogue asks whether the warnings these novels issued over four decades were ultimately heard.",
+  argumentSrc:"V, Epilogue; P, Epilogue",
+  afterlife:"The final frame is Herzl's <i>Altneuland</i> (1902), the founding utopian image against which the corpus's four-decade arc is measured.",
+  afterlifeSrc:"V, Epilogue",
+  novels:["niv-2019"]
+};
+
+/* book frame: sections without novels, shown in the flowchart, the chapter list and the console */
+const FRAME = {
+  intro:{ label:"Introduction", title:"Between the Kibbutz and Armageddon" },
+  concl:{ label:"Conclusion", title:"Warning, Testimony, Confession" }
+};
+const fullTitle = c => c.sub ? c.title + (/[?!]$/.test(c.title) ? ' ' : ': ') + c.sub : c.title;
+const plainT = t => String(t).replace(/[\u201c\u201d"]/g, '').toLowerCase();
+
+/* pages = pages of close reading in the dissertation (the timeline mark's radius follows the square root of this).
+   0 = the reading on record is in the proposal only; drawn dashed in the book and hollow on the timeline. */
+const NOVELS = [
+  { id:"kenan-1984", title:"The Road to Ein Harod", heb:"Ha-Derekh le-Ein Harod", author:"Amos Kenan", surname:"Kenan", year:1984,
+    publisher:"Am Oved, 1984 · trans. Grove Press, 1988", chapter:1, pages:30, pageRange:"D, pp. 40–46, 61–93",
+    short:"A military coup, a hunted veteran of 1948, a Palestinian hostage-guide, and a general who plans to fire missiles at Nineveh and Babylon.",
+    plot:`A military coup has taken place. The narrator learns from the radio that his children are alive and that only their counselors were killed. He is on the list. A veteran of 1948 who knows navigation and killing, he sets out from besieged Tel Aviv for Kibbutz Ein Harod, from which a free broadcast seems to come, and he takes a young Palestinian, Mahmoud, as hostage and guide, because without an Arab he will never reach Wadi Ara. Together they watch the army execute blindfolded prisoners and bulldoze them into a ditch. The coup leader, modeled on Ariel Sharon, explains his plan: missiles locked on points in space and time, Nineveh, Babylon, Titus, the Inquisition, so that every score of Jewish history can be settled at midnight. Rafi kills him and reaches Ein Harod.`,
+    plotSrc:"D, pp. 42–45, 72–76, 82, 90–91",
+    quote:{ text:"I get there. There is nothing. I recognize the spot, there's no mistake about it. […] Ein Harod is the place where everything starts, and I know how to get to the beginning. But there is nothing here.", cite:"Kenan, The Road to Ein Harod, 105, as quoted in D, p. 73" },
+    argument:`The dissertation calls it the formative Hebrew dystopia and cites the scholars who named it the quintessential Israeli dystopian novel, the touchstone of the genre. It posits three sources for the fascist future: the return of the repressed and denied violence of 1948, an obsession with militarism, and a misguided Zionist obsession with what Salo Baron criticized as the lachrymose conception of Jewish history. The most radical move is the last. The junta leader's wish to undo Jewish defeats retroactively takes Zionism's philosophy of history to its logical conclusion, and militarism itself is shown to stem from an identification with the victim position rather than from the conflict. In the book, Kenan and Tammuz open the tradition of Hebrew fiction in which the Jewish state and society themselves become the source of danger.`,
+    argumentSrc:"D, pp. 40, 43, 69, 90–93; P, Full Description",
+    origins:`Written as resistance literature against the 1982 Lebanon War. The coup leader was based on Sharon, once Kenan's close friend, as Kenan confirmed on television two days after Sharon's election in February 2001. The Hebrew edition is dedicated to Kenan's father, a member of the Work Battalion that founded Ein Harod in 1922. Kenan had tried the apocalyptic mode a decade earlier in <i>Shoah II</i> (1975). The plot follows the classical Orwellian model: an alienated insider turned rebel, a narrative of state oppression and a counter-narrative of resistance.`,
+    originsSrc:"D, pp. 40–42, 72, 74–76, 81",
+    legacy:`Translated into several languages, adapted for the stage and for a 1990 English-language film in which Alessandra Mussolini plays Liora, and recently republished. During the 2011 social protests its first paragraph was painted on Tel Aviv walls as a coded message about the fall of the city and the Zionist utopia. Two of the 1984 reviewers, Igal Sarna and Avraham Burg, later wrote dystopias of their own. Kenan's line that the State of Israel has destroyed the Land of Israel rings in the novel's ending.`,
+    legacySrc:"D, pp. 70, 74; P, Ch. One",
+    relations:[
+      { to:"tammuz-1984", why:"Tammuz was Kenan's friend and his editor at Haaretz; the two novels appeared in the same year and set the corpus's two paradigms.", src:"D, pp. 69, 203; V, Ch. 1" },
+      { to:"kashua-2004", why:"Like Kenan, Kashua links the nakba of 1948 to a future expulsion; Kenan stages it through war, Kashua through a peace agreement. Both protagonists are journalists.", src:"D, pp. 130–131; p. 54 n. 77" },
+      { to:"sarna-2014", why:"Sarna reviewed the 1984 novels and wrote a dystopia of his own thirty years later; both books carry the language of the 2011 protest, when Kenan's opening paragraph reappeared as graffiti.", src:"P, Ch. One; D, pp. 12, 70" },
+      { to:"bernstein-2013", why:"The dying father in East City, one of the militant state's architects, resembles Kenan's protagonists.", src:"D, p. 53" },
+      { to:"sarid-2015", why:"Kenan blamed his generation's militarism for the fascist future; Sarid locates the seeds of collapse in settler fanaticism. Both novels attack the lachrymose conception of history.", src:"D, pp. 197, 200" },
+      { to:"gillon-2020", why:"In 1984, the year Kenan and Tammuz published, Gillon led the Shin Bet operation that captured the Jewish Underground, the forces their fiction had imagined.", src:"V, Full Description" }
+    ] },
+
+  { id:"tammuz-1984", title:"Jeremiah's Inn", heb:"Pundako shel Yirmeyahu", author:"Benjamin Tammuz", surname:"Tammuz", year:1984,
+    publisher:"Zmora-Bitan, 1984", chapter:1, pages:0, pageRange:"D, pp. 69–70, 81, 203 (mentions); P; I; V",
+    short:"An ultra-Orthodox Sanhedrin rules a theocratic Israel; the Arabs have been expelled and secular dissenters are hunted.",
+    plot:`An ultra-Orthodox Sanhedrin establishes a theocratic regime that expels Arab citizens and turns on secular liberal dissenters. Fanatic Jewish sects impose religious law and fight each other to the death, and the Zionist state destroys itself from within.`,
+    plotSrc:"P, Ch. One; V, Brief Description",
+    argument:`The second of the two 1984 novels, and the more marginal in reception. Where Kenan gives fascism, Tammuz gives theocracy; the two together recalibrated the Hebrew literary imagination, repositioning the state from solution to problem. Tammuz deploys grotesque satire to examine messianic delusion and religious authority. The dissertation notes what Kenan's novel lacks and Tammuz's has: religious fundamentalism named as the cause of the dystopian situation.`,
+    argumentSrc:"D, pp. 69–70, 81; I, Ch. 1",
+    origins:`The novel opens with a quotation from Rabbi Zvi Kook, one of the most influential messianic Jewish leaders of the twentieth century, which directly calls for the establishment of a theocracy. Its title figure is Jeremiah, and its formal technique is biblical allusion. Tammuz belonged to the 1948 generation and had participated in the state's founding.`,
+    originsSrc:"D, p. 203; I, Ch. 1; P, Full Description",
+    legacy:`Its theocracy returns as the reference point for the Temple novels of the 2010s: the zealots of Sarid and Burstein are echoes of Herzl's Geyer and of Tammuz's Sanhedrin. A close reading of the novel is not yet on record in the working files.`,
+    legacySrc:"P, Ch. Five; V, Ch. 5",
+    relations:[
+      { to:"kenan-1984", why:"Kenan's friend and former editor; the same year; the second of the two paradigms.", src:"D, pp. 69, 203" },
+      { to:"sarid-2015", why:"Jeremiah's Inn dealt with the same religious-messianic forces and theological arguments that The Third confronts at the peak of their power.", src:"D, p. 203" },
+      { to:"burstein-2016", why:"Jeremiah is the title figure of one and the protagonist of the other; the proposal names Tammuz's theocracy as the precedent for both Temple novels.", src:"P, Ch. Five" },
+      { to:"ben-ner-1987", why:"Ben-Ner carries the theocratic scenario into the family unit three years later.", src:"V, Ch. 1" }
+    ] },
+
+  { id:"ben-ner-1987", title:"Angels Are Coming", heb:"Malachim Ba'im", author:"Yitzhak Ben-Ner", surname:"Ben-Ner", year:1987,
+    publisher:"Am Oved, 1987", chapter:1, pages:0, pageRange:"D, pp. 69, 203 (mentions); V",
+    short:"Messianic nationalism as domestic pathology: the theocratic scenario carried into the family.",
+    plot:`The theocratic scenario is carried into the family unit, rendering messianic nationalism as domestic pathology.`,
+    plotSrc:"V, Ch. 1",
+    argument:`The dissertation places it in the first wave of Hebrew dystopian writing that followed Likud's rise to power in 1977, focused, like Tammuz's novel, on the threat of Jewish religious fundamentalism, and later groups it with Tammuz among the novels that depicted religious regimes in the manner of Margaret Atwood.`,
+    argumentSrc:"D, pp. 69–70, 203",
+    origins:`[Reading not yet on record]`,
+    originsSrc:"",
+    legacy:`[Reading not yet on record]`,
+    legacySrc:"",
+    relations:[ { to:"tammuz-1984", why:"Continues Tammuz's theocratic scenario into the household.", src:"V, Ch. 1" } ] },
+
+  { id:"castel-bloom-1992", title:"Dolly City", heb:"Dolly City", author:"Orly Castel-Bloom", surname:"Castel-Bloom", year:1992,
+    publisher:"Zmora-Bitan, 1992 · trans. Dalkey Archive, 1997", chapter:2, pages:0, pageRange:"I, Ch. 2; P, Ch. Two",
+    short:"Hebrew fiction's first globalized, post-conflict dystopia: Israel after the conflict supposedly ends.",
+    plot:`With its grotesque Tel Aviv chaos, <i>Dolly City</i> is Hebrew fiction's first globalized post-conflict dystopia, imagining Israel after the conflict supposedly ends.`,
+    plotSrc:"I, Ch. 2",
+    argument:`It opens the decade that <i>Human Parts</i> closes. The avant-garde experimentation of 1992 belongs to the Oslo promise, which the book terms Utopian Promise #2 after Zionism's original promise; by 2002 that experimental register collapses into conventional Israeli realism. Castel-Bloom's shift mirrors Israeli literature's broader movement: as actual dystopia arrives, fictional dystopia becomes redundant.`,
+    argumentSrc:"I, Ch. 2",
+    origins:`Published at the opening of the Oslo years, which promised peace, normalization and globalization.`,
+    originsSrc:"P, Ch. Two",
+    legacy:`A glowing reception, which the chapter contrasts with the hostile reception of <i>Human Parts</i> a decade later. A full reading is not yet on record in the working files.`,
+    legacySrc:"P, Ch. Two; V, Ch. 2",
+    relations:[ { to:"castel-bloom-2002", why:"The same author a decade later, the cosmopolitan nightmare replaced by a concrete and local one.", src:"V, Ch. 2" } ] },
+
+  { id:"castel-bloom-2002", title:"Human Parts", heb:"Halakim Enoshiyim", author:"Orly Castel-Bloom", surname:"Castel-Bloom", year:2002,
+    publisher:"Kinneret, 2002 · trans. Zoland Books, 2003", chapter:2, pages:1, pageRange:"D, pp. 51, 215; P; I",
+    short:"The first novel to depict the terror attacks of the Second Intifada: bus bombings becoming routine, terror as weather.",
+    plot:`The first Hebrew novel to depict the terror attacks of the Second Intifada, imagining bus bombings becoming routine, a feature repeated in later novels. It reflects the Israeli reality of the early 2000s and depicts the attacks as a traumatic cycle of senseless violence.`,
+    plotSrc:"P, Full Description; D, p. 51",
+    argument:`The dissertation reads it as the Jewish-Zionist and conservative counterpart to Kashua's dystopia, one that also reveals truths and anxieties about nationalism, statehood and the failed peace process. Read together, the two novels mark the year 2000 as a watershed, when the Zionist hope for normalcy was replaced by grim visions. The novel reveals the instability of physical and psychic borders in Israel/Palestine and, at times, not the ubiquitous melancholy of the left but a more immediate colonial anxiety.`,
+    argumentSrc:"D, pp. 51–52, 215",
+    origins:`Castel-Bloom's movement from avant-garde experimentation to documentary realism: suicide bombings as weather, terror as routine.`,
+    originsSrc:"I, Ch. 2",
+    legacy:`A hostile reception, including reviews that categorized the novel as realistic rather than dystopian, which the chapter reads as the moment the decade's crisis entered literary judgment.`,
+    legacySrc:"P, Ch. Two; V, Ch. 2",
+    relations:[
+      { to:"castel-bloom-1992", why:"Bookends of the Oslo decade by one author.", src:"I, Ch. 2" },
+      { to:"kashua-2004", why:"The dissertation pairs the two as the Jewish-Zionist and the Palestinian dystopias of the same years; together they mark 2000 as the watershed.", src:"D, p. 51" }
+    ] },
+
+  { id:"kashua-2002", title:"Dancing Arabs", heb:"Aravim Rokdim", author:"Sayed Kashua", surname:"Kashua", year:2002,
+    publisher:"Modan, 2002 · trans. Grove Press, 2004", chapter:3, pages:13, pageRange:"D, pp. 113–129",
+    short:"An autobiographical coming-of-age novel from Tira to a Jewish boarding school and back, as the second intifada erupts.",
+    plot:`Dozens of short chapter-stories, in a concise, thin Hebrew, from early childhood in Tira to young fatherhood. The boy is sent to an elite Jewish boarding school in Jerusalem, where he shaves his mustache and practices the letter P with a piece of paper held to his mouth, and where the affair with a Jewish girl ends when her mother threatens to throw her out. Student years at the Hebrew University, an unhappy marriage in Beit Safafa, and a return to Tira when the intifada erupts. The father, who believed in Trotsky, Lenin, Gagarin and Nasser, comes back from Egypt having lost faith in the Arab world.`,
+    plotSrc:"D, pp. 116–121, 125",
+    quote:{ text:"Mother says they're liable to load each village onto a different truck, and we'll wind up being taken from Beit Safafa to Jordan. […] Mother says we've got to make sure that the whole family is on the same truck.", cite:"Kashua, Dancing Arabs, 223–224, as quoted in D, p. 125" },
+    argument:`Read closely and chronologically, Kashua's first two novels reveal not only a crisis of identity but figures of ongoing melancholic loss: the characters fear to lose their citizenship, rights, land or life; they mourn past defeats while expressing anxiety over future ones; and they evoke a possible future nakba. The section titled "I wanted to be a Jew" shows passing as a matter of survival and safety, not only acceptance. The war, the second intifada, enters the narrative late but colors the beginning and shapes the structure. The novel's ending, with its trucks, is where Kashua's road to dystopia begins.`,
+    argumentSrc:"D, pp. 115, 119–120, 125–126",
+    origins:`Kashua, like his protagonist, was born in Tira and educated at a Jewish boarding school in Jerusalem. The book records the Sabra and Shatila massacre of 1982 as a children's game, the Gulf War, perestroika, the Oslo boom when the road to Tira was paved, and the outbreak of 2000. It is minor literature in the sense of Deleuze and Guattari, written by a minority within the majority's language.`,
+    originsSrc:"D, pp. 113–114, 118, 123, 126",
+    legacy:`The Los Angeles Times called books like this the textbooks for future generations. Some Jewish-Israeli readers took the protagonist's darkest confession as proof of an internal threat; the dissertation reads it instead as the rage that Israel's return to militarism produces. Kashua later adapted the novel for a 2015 film.`,
+    legacySrc:"D, pp. 118–119, 123",
+    relations:[ { to:"kashua-2004", why:"Let It Be Morning picks up where Dancing Arabs leaves off: the reluctant return of an unnamed Israeli-Palestinian to his childhood village.", src:"D, p. 129" } ] },
+
+  { id:"kashua-2004", title:"Let It Be Morning", heb:"Va-Yehi Boker", author:"Sayed Kashua", surname:"Kashua", year:2004,
+    publisher:"Modan, 2004 · trans. Grove Press, 2006", chapter:3, pages:13, pageRange:"D, pp. 47–50, 129–137",
+    short:"The army seals an Arab village inside Israel; the reason arrives at the end, with a peace treaty.",
+    plot:`An unnamed Arab-Israeli journalist leaves the big city, where the wall of his building was sprayed with ARABS OUT = PEACE+SECURITY, and returns with his wife to their village in Wadi Ara. They find a society of gang violence, protection rackets and early engagements. One morning the army puts the village under siege; tanks fire on anyone who tries to leave; electricity and food run out; the villagers turn on each other and on the Palestinian day-laborers among them. The reason arrives at the end. A peace treaty has been signed, and Israel's Arab citizens are to be stripped of their citizenship and attached to the new Palestinian state.`,
+    plotSrc:"D, pp. 48–49, 132–135",
+    quote:{ text:"Nothing like this has happened since the beginning of military rule. We've had the occasional roadblock and cars are often checked, but never […] was there a decision not to let the inhabitants out.", cite:"Kashua, Let It Be Morning, 72, as quoted in D, p. 133" },
+    argument:`A literary dystopia in the full sense: a narrative of resistance to an authoritarian regime, with explicit social critique. The dissertation calls it the native's dystopia. The siege the villagers wake to was, at the time of writing, what Israel was doing to villages outside its borders; the novel extends the occupation's policies to the state's own Arab citizens. Its target is not the Israeli right but the Oslo Accords and liberal Zionism, whose peace covers a Jewish ethnic nationalism that cannot include Arabs. Following Arendt, the Israeli-Arabs lose the right to ask for rights, and the ending confirms Sargent's argument that the settler utopia was always accompanied by dystopias for the indigenous inhabitants. In the book this is the hinge.`,
+    argumentSrc:"D, pp. 49–50, 115, 131, 133; V, Ch. 3",
+    origins:`Kashua has said that Primo Levi's writing influenced him in writing this novel. It draws on the demographic and loyalty discourse of the intifada years, the programs of Avigdor Liberman, and Benny Morris's talk of a future transfer of Israeli-Palestinians. The Guardian placed it with Orwell, Kafka and Catch-22. Kashua's father, reading the novel, warned his son that Israel could carry out the plan.`,
+    originsSrc:"D, pp. 49, 116, 130–132",
+    legacy:`Translated into six languages and acclaimed in Israel and internationally; criticized by many Arab commentators for its portrait of the village. During the 2014 Gaza war Kashua left Israel for good, writing in The Guardian that after twenty-five years of writing in Hebrew nothing had changed. His departure literalizes the displacement his fiction diagnosed.`,
+    legacySrc:"D, pp. 113, 130, 133; I, Ch. 3",
+    relations:[
+      { to:"kashua-2002", why:"The sequel in plot and biography.", src:"D, p. 129" },
+      { to:"kenan-1984", why:"Both link 1948 to a future expulsion; both narrators are journalists.", src:"D, pp. 130–131" },
+      { to:"castel-bloom-2002", why:"Its Jewish-Zionist counterpart in the same years.", src:"D, p. 51" },
+      { to:"sarna-2014", why:"Both authors later left Israel; the proposal pairs their exits.", src:"P, Ch. Four" }
+    ] },
+
+  { id:"bernstein-2013", title:"East City", heb:"Ha-Ir ha-Mizrahit", author:"Ilana Bernstein", surname:"Bernstein", year:2013,
+    publisher:"Kinneret Zmora, 2013", chapter:4, pages:4, pageRange:"D, pp. 53, 151, 184–188",
+    short:"A closed Israel run by ten families and the fundamentalists; two sisters and their dying father, an architect of the regime.",
+    plot:`Israel is closed and no one can escape. An autocratic regime of hyper-nationalists, the ten families and the fundamentalists, has crushed Arab resistance and moved on to leftists, dissidents, asylum-seekers and migrant workers. It promotes drug abuse and pornography, restricts and monitors the internet, and manipulates sexuality for its own benefit. Two estranged sisters, one addicted to alcohol, the other to random sex, tend their dying father, one of the architects of the occupation and the regime, whom one of them calls the allegorical father. An uprising erupts on the last page. In the book: the novel partitions Tel Aviv, relocating the Green Line into Jewish neighborhoods and casting the Nakba as a primal sin.`,
+    plotSrc:"D, pp. 53, 186–187; P, Ch. Four",
+    argument:`The regime is comprehended as the future expansion of the occupation and its colonial practices into Israel itself, in line with Leibowitz's prediction. Unlike the other dystopias in the dissertation it advances a feminist critique of the occupation: the daughters' contempt for the national father is a rebellion against the founders' generation and the murderous society it created. The dissertation also judges the book: less a prophetic narrative than a long diatribe, conveying the defeated melancholy of a left whose life contains little but rage and rout.`,
+    argumentSrc:"D, pp. 53, 186–188",
+    origins:`Huxley's <i>Brave New World</i>, Orwell and <i>Fahrenheit 451</i>: literature and prose writing have a role in the oppression. Like all three Netanyahu-era novels it refers to the 2011 social protest and its neutralization.`,
+    originsSrc:"D, pp. 53, 151, 154, 187",
+    legacy:`A mixed public reception.`,
+    legacySrc:"D, p. 151",
+    relations:[
+      { to:"kenan-1984", why:"The dying father resembles Kenan's murderous protagonists.", src:"D, p. 53" },
+      { to:"sarna-2014", why:"Both analyze the 2011 protest and depict an Israel run by tycoons and fundamentalists; Sarna's Capo-talism, Bernstein's ten families.", src:"D, pp. 154–155, 188" }
+    ] },
+
+  { id:"mishmari-2013", title:"The Old Man Lost His Mind", heb:"Ha-Zaken Ibed et Da'ato", author:"Avivit Mishmari", surname:"Mishmari", year:2013,
+    publisher:"Pardes, 2013", chapter:4, pages:0, pageRange:"P, Ch. Four; V, Ch. 4",
+    short:"In a theocratic Israel a veteran politician's televised speech ignites a secular revolt; a Jewish civil war follows.",
+    plot:`In a theocratic Israel a veteran politician's televised speech ignites secular revolt against religious oppression, and the state's instruments of control, once reserved for the territories, are deployed at home.`,
+    plotSrc:"P, Ch. Four",
+    argument:`It mocks the ingathering of the exiles through the fragmentation of a single consciousness. With Bernstein and Sarna it maps the occupation's methods migrating from periphery to center before the political language for that crossing had arrived.`,
+    argumentSrc:"V, Ch. 4",
+    origins:`[Reading not yet on record]`,
+    originsSrc:"",
+    legacy:`[Reading not yet on record]`,
+    legacySrc:"",
+    relations:[] },
+
+  { id:"sarna-2014", title:"2023", heb:"2023", author:"Igal Sarna", surname:"Sarna", year:2014,
+    publisher:"Self-published through crowdfunding, 2014", chapter:4, pages:31, pageRange:"D, pp. 52–53, 155–183",
+    short:"Israel abandoned; an old journalist and his small daughter escape a dead Tel Aviv by sea. A reversed exodus.",
+    plot:`Israel has been abandoned; there is no regime at all. Leon, an elderly journalist, walks the streets of Tel Aviv collecting books from empty apartments and analyzes the end of the country with the friends who stayed: Weiss, a sailor and Holocaust survivor, and Gross, nicknamed Holed, the mole rat, who documents the waves of emigration like a scholar of emigration. The two old men are like two historians in a bomb shelter. Leon and his small daughter escape by boat toward a nearby island, comparing their flight to their parents' escape from National Socialism. Weiss dies in a storm; an Arab crew from a nearby boat saves father and daughter.`,
+    plotSrc:"D, pp. 155–156, 164",
+    quote:{ text:"The whole country seemed to [Leon] like a wooden house whose foundations had been devoured by termites. A house that was built with love, but got nibbled by lies and greed […] till the wind passed through it and turned it into dust.", cite:"Sarna, 2023, the dissertation's translation, D, p. 156" },
+    argument:`Technically a post-apocalyptic anti-utopia rather than a classic dystopia, aimed at Zionist utopian plans as irrational and self-destructive. Its three targets: Zionism's negation of exile, Israel's instrumentalization of the memory of the Shoah, and a regime Leon calls Capo-talism, capitalism fused with fascism. The novel stands Herzl on his head: a full return of the Israelis to the diaspora, and immigration to Israel remembered as destruction rather than construction. The dissertation calls it one of the most subversive, critical and anti-Zionist novels written in Hebrew in recent decades. In the book its title names a year its later readers would reach as their own present.`,
+    argumentSrc:"D, pp. 53, 158–159, 161, 167; V, Ch. 4",
+    origins:`An homage to Cormac McCarthy's <i>The Road</i>. Emigration as the implementation of Philip Roth's <i>Operation Shylock</i>. The language of the 2011 social protest's posters. The 1973 war, in which Sarna fought, enters through Habakkuk, a traumatized veteran who designed his escape boat while held hostage in Syria. Written mostly in Oxford and published through crowdfunding.`,
+    originsSrc:"D, pp. 12, 52, 157, 166",
+    legacy:`Netanyahu was caught on tape demanding that the publisher of Yediot Ahronot fire Sarna, his consistent critic. Netanyahu then sued him for libel over a Facebook post, won, and Sarna lost his column. Interviewed in a Tel Aviv café in 2016, Sarna was at first hostile, having assumed the interviewer was Netanyahu's agent. By 2019 he had emigrated from Israel, following his own protagonists.`,
+    legacySrc:"D, pp. 157–158",
+    relations:[
+      { to:"kenan-1984", why:"Sarna reviewed the 1984 novels; both books carry the language of the 2011 protest.", src:"P, Ch. One; D, pp. 12, 70" },
+      { to:"bernstein-2013", why:"Both analyze the 2011 protest and the fusion of tycoons, fundamentalists and state violence.", src:"D, pp. 154–155, 188" },
+      { to:"kashua-2004", why:"Both authors later left Israel.", src:"P, Ch. Four" },
+      { to:"sarid-2015", why:"Both depict a Zionist obsession with a lachrymose conception of history as leading to perpetual war.", src:"D, p. 200" }
+    ] },
+
+  { id:"sarid-2015", title:"The Third", heb:"Ha-Shelishi", author:"Yishai Sarid", surname:"Sarid", year:2015,
+    publisher:"Am Oved, 2015 · trans. Restless Books, 2024", chapter:5, pages:20, pageRange:"D, pp. 56–58, 190–206",
+    short:"After the coastal cities are vaporized, a settler king rebuilds the Temple, captures God, and rules by daily sacrifice.",
+    plot:`Tel Aviv and Haifa have been vaporized, seemingly by nuclear attack. In the chaos a born-again settler officer, Yehoaz, seizes power, expels the Arabs, removes the mosques from the Mount, finds the Tablets, rebuilds the Temple, captures God and locks him in it. The Kingdom of Judah lives on constant war and on graphically depicted daily animal sacrifice, led by the narrator, prince Yehonatan, lamed at four by a grenade meant for his father, and a vegetarian. An angel tells him to demand his father's resignation; he ignores it. A pig's head appears in the Temple, a horrible smell covers the city, and the kingdom declines from the month of Av to Yom Kippur, when the awakened God says the animal sacrifice is not enough and demands the king's newborn son. The diary is presented as a scientific edition written in captivity before Yehonatan's execution.`,
+    plotSrc:"D, pp. 57–58, 193–197, 203",
+    argument:`The dissertation calls it the most profound and important Hebrew dystopia, a critical dystopia that centers on the essence of God and on the rise of Jewish fundamentalism as the force shaping Israel's present and future. Read through Adi Ophir, it is a meditation on scapegoating, victimhood and self-victimization: the settlers as a victim community in love with their losses. Unlike Kenan, who blamed his generation's militarism, Sarid locates the seeds of collapse in settler fanaticism, and he confronts that force at the peak of its power, twenty years after Rabin's assassination. In the book the Temple is rebuilt as a logistical operation rather than a miraculous event: God imprisoned, sacrifices scheduled, redemption a clerical task.`,
+    argumentSrc:"D, pp. 58, 191, 195, 197, 200, 205; V, Ch. 5",
+    origins:`Isaiah's and Jeremiah's prophecies of a temple destroyed by the corruption of king and priest; a bleak twist on the binding of Isaac; the Temple Institute's stated aims; a king who can be read as a veiled portrait of officers turned politicians such as Bennett, Eitam and Peretz. Written in a biblical-Talmudic style. Sarid's father, Yossi Sarid, led Meretz and the peace camp, and the prince's loyalty and marginality reflect the position of a leader's son.`,
+    originsSrc:"D, pp. 58, 190–191, 193–194, 199",
+    legacy:`Gil Hochberg lists it among the works that have de-Westernized and globalized the genre. Maya Guez in Haaretz predicted extensive theological and political discussion. Translated into English and awarded prizes in Israel and abroad; interviews with Sarid since 2020 anchor the book's chapter.`,
+    legacySrc:"D, pp. 55, 192; V, Ch. 5",
+    relations:[
+      { to:"tammuz-1984", why:"The same religious-messianic forces, confronted at their historic triumph rather than as seeds of ideas.", src:"D, p. 203" },
+      { to:"kenan-1984", why:"Militarism versus settler fanaticism as the source of collapse; both attack the lachrymose conception of history.", src:"D, pp. 197, 200" },
+      { to:"sarna-2014", why:"Both depict the obsession with catastrophic history as leading to perpetual war.", src:"D, p. 200" },
+      { to:"burstein-2016", why:"Published within months of each other, in sharply different registers, both on the Temple and the prophets.", src:"P, Ch. Five" }
+    ] },
+
+  { id:"burstein-2016", title:"Muck", heb:"Tit", author:"Dror Burstein", surname:"Burstein", year:2016,
+    publisher:"Keter, 2016 · trans. Farrar, Straus and Giroux, 2018", chapter:5, pages:0, pageRange:"P, Ch. Five and Full Description; I, Ch. 5",
+    short:"Jeremiah in twenty-first-century Jerusalem: false prophets on the light rail, a warning of military defeat.",
+    plot:`Retells the biblical stories of kings, prophets, ruin and exile, recasting them in twenty-first-century Jerusalem, where false prophets prophesy on the light rail and Jeremiah tries to warn of military defeat and impending doom. Burstein's contemporary Jeremiah, moving between the light rail and the cafés, finds himself trapped in the city's spiritual-political muck.`,
+    plotSrc:"P, Ch. Five; I, Ch. 5",
+    argument:`It satirizes the prophetic voice and position of modern Hebrew literature itself, mixing biblical narratives with contemporary ones, comedy with lament. With <i>The Third</i> it shows how the theocratic warning that Herzl embedded in Zionism's founding utopia becomes a dominant strain in Hebrew literature, as the prophetic mode comes to imagine the nation's destruction rather than its redemption.`,
+    argumentSrc:"P, Full Description and Ch. Five",
+    origins:`The prophetic mode in modern Hebrew literature, rooted in engagement with the biblical prophets, and contemporary theological writing by radical settlers.`,
+    originsSrc:"P, Ch. Five",
+    legacy:`Translated into English and recognized with major prizes in Israel and abroad. A full reading is not yet on record in the working files.`,
+    legacySrc:"P, Ch. Five; V, appendix",
+    relations:[
+      { to:"sarid-2015", why:"Published within months of each other; the two Temple novels.", src:"P, Ch. Five" },
+      { to:"tammuz-1984", why:"Jeremiah's Inn is named as the precedent for the Temple novels.", src:"P, Ch. Five" }
+    ] },
+
+  { id:"gillon-2020", title:"Vicious Messiah", heb:"Mashiah Akhzar", author:"Carmi Gillon & Yosef Shavit", surname:"Gillon", year:2020,
+    publisher:"Kinneret Zmora Dvir, 2020", chapter:6, pages:0, pageRange:"P, Ch. Six; I, Ch. 6; V",
+    short:"A former Shin Bet director writes the warning: Jewish terrorists seek holy war and Armageddon.",
+    plot:`Sophisticated terror attacks lead investigators toward a new Islamic organization while officials of the Jewish Department grow troubled by internal signs. Israeli-Jewish terrorists attack Arabs and Reform Jews in order to bring about holy war and Armageddon.`,
+    plotSrc:"I, Ch. 6; P, Ch. Six",
+    argument:`Since Orwell the secret police have served as dystopia's oppressive mechanism, their chief the main villain or interrogator. The Israeli case recasts that figure as the author. Gillon's fiction comes from a position no other writer in the corpus occupies: he once stood inside the institutions his novels imagine as compromised. When security chiefs write dystopia, fiction becomes testimony, the apparatus speaking its own fears into existence.`,
+    argumentSrc:"P, Ch. Six; V, Full Description; I, Ch. 6",
+    origins:`Gillon directed the Shin Bet from 1994 to 1996 and held office during the assassination of Yitzhak Rabin. In 1984, the year Kenan and Tammuz published, he led the operation that captured the Jewish Underground. Both novels were written with the journalist Yosef Shavit.`,
+    originsSrc:"V, Full Description",
+    legacy:`Read alongside Gillon's public interviews and his testimony in the documentary <i>The Gatekeepers</i>.`,
+    legacySrc:"P, Ch. Six",
+    relations:[
+      { to:"gillon-2021", why:"Its sequel.", src:"P, Ch. Six" },
+      { to:"kenan-1984", why:"1984: the year of the first dystopias and of Gillon's operation against the Jewish Underground.", src:"V, Full Description" },
+      { to:"tammuz-1984", why:"The messianic-right forces Tammuz imagined are the ones Gillon's unit captured that year.", src:"V, Full Description" }
+    ] },
+
+  { id:"gillon-2021", title:"Vicious Secret", heb:"Sod Akhzar", author:"Carmi Gillon & Yosef Shavit", surname:"Gillon", year:2021,
+    publisher:"Kinneret Zmora Dvir, 2021", chapter:6, pages:0, pageRange:"P, Ch. Six; V",
+    short:"The terrorists become ministers, take over the Shin Bet, and use it against secular Jews.",
+    plot:`The terrorists of the first novel become government ministers, gain control of the Shin Bet, and use it to oppress secular Jews. A coalition controlled by ultra-Orthodox parties and the extreme right imposes religious law and dismantles democratic rights through legislation.`,
+    plotSrc:"P, Ch. Six; I, Ch. 6",
+    argument:`The state continues to function, but its functions begin to serve forces it was meant to contain. That reversal is the endpoint toward which the book's four-decade literary history moves. The novels of 1984 issued their warnings from the margins of institutional power; by the 2020s the warning came from inside the institution itself. Leibowitz's final question hangs over both novels: whether the apparatus built to defend the state has become its gravest threat.`,
+    argumentSrc:"V, Full Description and Ch. 6",
+    origins:`Gillon's own service and the fears voiced by retired Shin Bet directors in <i>The Gatekeepers</i>.`,
+    originsSrc:"P, Ch. Six",
+    legacy:`The chapter uses Gillon's deep-state critique to examine the appointment of Jewish terrorists to Netanyahu's government and their influence on the Israeli police and security services.`,
+    legacySrc:"P, Ch. Six",
+    relations:[ { to:"gillon-2020", why:"The first of the pair.", src:"P, Ch. Six" } ] },
+
+  { id:"niv-2019", title:"In the End We All Die", heb:"Ba-Sof Kulanu Namut", author:"Kobi Niv", surname:"Niv", year:2019,
+    publisher:"Pardes, 2019", chapter:"ep", pages:0, pageRange:"I, Ch. 6; V, Epilogue",
+    short:"Israel destroyed by atomic bombs; five refugees work a garbage barge on the Hudson. Text begins on the front cover and ends on the back.",
+    plot:`Israel is destroyed by atomic bombs, and five Israeli refugees work a Hudson River garbage barge. Their exile is rendered in experimental form: the text begins on the front cover and ends on the back, mirroring the absence of a proper beginning or conclusion.`,
+    plotSrc:"I, Ch. 6",
+    argument:`Outside the fourteen-novel corpus. It appears in the epilogue because its scenario now reads under a pressure it did not carry when it appeared, though the book does not treat that pressure as prediction. The former guardians document their apparatus becoming the threat it was built to prevent; the exiles testify from the diaspora's margins, managing history's waste on American waters.`,
+    argumentSrc:"V, Epilogue; I, Ch. 6",
+    origins:`[Reading not yet on record]`,
+    originsSrc:"",
+    legacy:`[Reading not yet on record]`,
+    legacySrc:"",
+    relations:[] }
+];
+
+/* anchors that prose links to */
+const ANCHORS = {
+  leibowitz: { title:"Leibowitz, 1968", kicker:"THE SPINE",
+    body:`<p>After the 1967 war the Israeli philosopher Yeshayahu Leibowitz warned that Israel's rule over the Palestinians would unavoidably transform Israel into a secret-police state. The occupation, presented as temporary, would become permanent, its status the fault line in Israeli-Jewish society for decades to come.</p>
+    <blockquote>The Arabs would be the working people and the Jews the administrators, inspectors, officials, and police—mainly secret police. A state ruling a hostile population of 1.5 to 2 million foreigners would necessarily become a secret-police state, with all that this implies for education, free speech and democratic institutions.<cite>Leibowitz, "The Territories," 1968, as quoted in D, pp. 58–59</cite></blockquote>
+    <p>No other intellectual has shaped the Israeli anti-occupation movement. His prophecy looms large in the reading of every novel here; the Netanyahu-era dystopias and <i>The Third</i> read as a conversation with his corruption hypothesis, and Avi Shlaim chose to end the revised <i>Iron Wall</i> with his warning. In the book each chapter tests the prophecy against a different facet of Israeli political life.</p><span class="src">P, Full Description · D, pp. 58–60 · V, Introduction</span>` },
+  herzl: { title:"Herzl's Altneuland, 1902", kicker:"THE FOUNDING UTOPIA",
+    body:`<p>Herzl's <i>Altneuland</i> already contained two dystopian enclaves. The first the novel could not foresee: the Palestinian future the realization of the Jewish state would produce. The second Herzl wrote into the text himself. Rabbi Dr. Geyer campaigns to strip non-Jews of rights; if Geyer wins, the novel warns, Jews too will become strangers in the land, and the land will go to wrack and ruin. That internal enclave is the seed the corpus later develops: the theocracy of <i>Jeremiah's Inn</i>, the zealots of <i>The Third</i>.</p>
+    <p>Most of the Hebrew dystopias are anti-utopian in the strict sense: they address and refute Zionist utopianism in general, or Herzl's <i>Altneuland</i> specifically. <i>2023</i> stands Herzl on his head.</p><span class="src">V, Introduction · P, Introduction · D, pp. 29, 33, 161</span>` },
+};
+
+const SOURCES = [
+  { key:"D", name:"Itay Eisinger, The Dystopian Turn in Hebrew Literature", meta:"PhD dissertation, University of Texas at Austin, 2019 · supervisor Yoav Di-Capua · page numbers as printed", took:"All readings of Kenan, Kashua, Sarna, Sarid, Bernstein and Human Parts; every quotation from a novel, in the dissertation's rendering and with its page; the Leibowitz passage." },
+  { key:"P", name:"Utopia Undone: Hebrew Literature from Herzl to Gaza, book proposal", meta:"July 2026 draft", took:"Chapter contexts, threats and afterlives; the readings of Tammuz, Ben-Ner, Mishmari, Burstein and Gillon; the epilogue." },
+  { key:"I", name:"Utopia Undone, earlier proposal draft (\"To Isis\")", meta:"undated, precedes the July draft", took:"The epigraph; the Dolly City reading; the Human Parts register shift; the Temple chapter's argument; Niv's barge." },
+  { key:"V", name:"Utopia Undone, proposal v33", meta:"project file", took:"Chapter titles and date ranges; the corpus list, publishers and translations; the Gillon biography; the permanence-to-reversibility thesis; the epilogue frame." }
+];
+
+/* ============================================================
+   SHELL · utilities, links, sound, records, views
+   ============================================================ */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reduced = RM.matches;
+RM.addEventListener && RM.addEventListener('change', e => { reduced = e.matches; });
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp  = (a, b, t) => a + (b - a) * t;
+const chapterOf = n => (n.chapter === 'ep' ? EPILOGUE : CHAPTERS.find(c => c.num === n.chapter));
+const novelById = id => NOVELS.find(n => n.id === id);
+const chapterByKey = k => (k === 'ep' ? EPILOGUE : CHAPTERS.find(c => c.num === +k));
+const ALLCH = CHAPTERS.concat([EPILOGUE]);
+/* counts come from the data: the corpus is not fixed */
+const CORPUS = NOVELS.filter(n => n.chapter !== 'ep');
+const CORPUS_N = CORPUS.length;
+const CORPUS_AUTHORS = new Set(CORPUS.flatMap(n => n.author.split(' & '))).size;
+const CHAPTER_N = CHAPTERS.length;
+const HALF_N = Math.floor(CORPUS_N / 2);
+const NUMWORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+const numWord = n => NUMWORDS[n] || String(n);
+const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---------- every named thing becomes a link ---------- */
+const ENTITIES = (() => {
+  const list = [];
+  NOVELS.forEach(n => list.push({ text:n.title, kind:'novel', id:n.id }));
+  CHAPTERS.forEach(c => list.push({ text:c.title, kind:'chapter', id:String(c.num) }));
+  list.push({ text:'Epilogue', kind:'chapter', id:'ep' });
+  const bySurname = {};
+  NOVELS.forEach(n => { (bySurname[n.surname] = bySurname[n.surname] || []).push(n); });
+  Object.keys(bySurname).forEach(s => {
+    const ns = bySurname[s];
+    if (ns.length === 1) list.push({ text:s, kind:'novel', id:ns[0].id });
+    else list.push({ text:s, kind:'chapter', id:String(ns[0].chapter) });
+  });
+  [['Yeshayahu Leibowitz','leibowitz'],['Leibowitz','leibowitz'],['Altneuland','herzl'],["Herzl's Dr. Geyer",'herzl'],["Herzl's Geyer",'herzl'],['Herzl','herzl'],['Geyer','herzl']].forEach(([t,id]) => list.push({ text:t, kind:'anchor', id }));
+  list.sort((a, b) => b.text.length - a.text.length);
+  const re = new RegExp('(' + list.map(e => e.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'g');
+  const map = {}; list.forEach(e => { map[e.text] = e; });
+  return { re, map };
+})();
+function linkify(html, selfKey){
+  if (!html) return '';
+  const parts = String(html).split(/(<[^>]+>)/);
+  let skip = 0;
+  return parts.map(p => {
+    if (p.startsWith('<')) {
+      if (/^<(a|cite|span)\b/i.test(p)) skip++;
+      else if (/^<\/(a|cite|span)>/i.test(p) && skip > 0) skip--;
+      return p;
+    }
+    if (skip > 0) return p;
+    return p.replace(ENTITIES.re, m => {
+      const e = ENTITIES.map[m]; if (!e) return m;
+      const key = e.kind + ':' + e.id;
+      if (key === selfKey) return m;
+      return `<a class="lk ${e.kind === 'chapter' ? 'ch' : ''}" data-kind="${e.kind}" data-id="${e.id}">${m}</a>`;
+    });
+  }).join('');
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a.lk');
+  if (!a) return;
+  e.preventDefault(); e.stopPropagation();
+  const k = a.dataset.kind, id = a.dataset.id;
+  if (k === 'novel') openNovel(id);
+  else if (k === 'chapter') openChapter(id);
+  else if (k === 'anchor') openAnchor(id);
+});
+
+/* ---------- sound (synthesized, no assets) ---------- */
+const Snd = (function(){
+  let ctx = null, master = null, on = true, lastTick = 0;
+  try { on = localStorage.getItem('uu-sound') !== 'off'; } catch(e){}
+  function ensure(){
+    if (!ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return false;
+      ctx = new AC(); master = ctx.createGain(); master.gain.value = .45; master.connect(ctx.destination); }
+    if (ctx.state === 'suspended') ctx.resume();
+    return true;
+  }
+  function tone(f, dur, type, vol, slide, delay){
+    if (!on) return;
+    try {
+      if (!ensure()) return;
+      const t = ctx.currentTime + (delay || 0);
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
+      if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, f + slide), t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .008);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .03);
+    } catch(e){}
+  }
+  return {
+    ensure,
+    tick(){ const now = performance.now(); if (now - lastTick < 40) return; lastTick = now; tone(1500, .04, 'square', .035); },
+    click(){ tone(480, .13, 'triangle', .22, -200); tone(960, .07, 'sine', .09, 0, .01); },
+    open(){ [523, 659, 784].forEach((f, i) => tone(f, .28, 'sine', .13, 0, i * .07)); },
+    chapter(){ tone(392, .2, 'triangle', .16, 140); tone(587, .22, 'sine', .08, 0, .08); },
+    edge(){ tone(330, .1, 'sine', .07, 60); },
+    unlock(){ [523, 659, 784, 1046].forEach((f, i) => tone(f, .4, 'triangle', .15, 0, i * .1)); },
+    complete(){ [392, 523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, .5, 'triangle', .14, 0, i * .09)); },
+    back(){ tone(300, .08, 'sine', .09); },
+    toggle(){ on = !on; try { localStorage.setItem('uu-sound', on ? 'on' : 'off'); } catch(e){} if (on) { ensure(); tone(660, .1, 'sine', .12); } return on; },
+    get on(){ return on; }
+  };
+})();
+
+/* ---------- grain texture ---------- */
+(function grain(){
+  const c = document.createElement('canvas'); c.width = c.height = 180;
+  const x = c.getContext('2d'), d = x.createImageData(180, 180);
+  for (let i = 0; i < d.data.length; i += 4) { const v = (Math.random() * 255) | 0; d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 26; }
+  x.putImageData(d, 0, 0);
+  document.documentElement.style.setProperty('--grain', `url(${c.toDataURL()})`);
+})();
+
+/* ---------- overture ---------- */
+(function overture(){
+  const host = $('#ovTitle');
+  'UTOPIA UNDONE'.split('').forEach((ch, i) => {
+    if (ch === ' ') { const s = document.createElement('span'); s.className = 'sp'; host.appendChild(s); return; }
+    const s = document.createElement('span'); s.className = 'ltr'; s.textContent = ch;
+    s.style.animationDelay = (0.42 + i * 0.055) + 's'; host.appendChild(s);
+  });
+  const t = $('#ovType'), cite = $('#ovCite'), full = EPIGRAPH.text;
+  if (reduced) { t.textContent = full; cite.textContent = EPIGRAPH.cite; }
+  else { let i = 0; setTimeout(function tick(){ t.textContent = full.slice(0, ++i); if (i < full.length) setTimeout(tick, 22); else cite.textContent = EPIGRAPH.cite; }, 2350); }
+})();
+
+/* ---------- discovery ---------- */
+const read = new Set(); const seenCh = new Set(); let firstEdge = false;
+function markRead(id){
+  const n = novelById(id);
+  if (!n || n.chapter === 'ep' || read.has(id)) return;
+  read.add(id);
+  $('#discNum').textContent = read.size;
+  $('#discFill').style.width = (read.size / CORPUS_N * 100) + '%';
+  if (read.size === 1)  { toast('◈', 'FIRST RECORD', 'One of ' + numWord(CORPUS_N) + ' opened'); Snd.unlock(); }
+  else if (read.size === HALF_N)  { toast('◈', 'HALFWAY', cap(numWord(HALF_N)) + ' of ' + numWord(CORPUS_N)); Snd.unlock(); }
+  else if (read.size === CORPUS_N) { toast('◆', 'CORPUS COMPLETE', 'All ' + numWord(CORPUS_N) + ' novels opened'); Snd.complete(); }
+  const ch = chapterOf(n);
+  if (ch.num && ch.novels.every(x => read.has(x)) && !seenCh.has(ch.num)) {
+    seenCh.add(ch.num); if (read.size !== CORPUS_N && read.size !== HALF_N && read.size !== 1) { toast('◈', 'CHAPTER ' + ch.num + ' READ', ch.title); Snd.unlock(); }
+  }
+}
+let toastT;
+function toast(ic, kind, msg){
+  $('#toastIc').textContent = ic; $('#toastKind').textContent = kind; $('#toastMsg').textContent = msg;
+  const el = $('#toast'); el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+/* ---------- the record drawer ---------- */
+function srcTag(s){ return s ? `<span class="src">${esc(s)}</span>` : ''; }
+function weightLine(n, ch){
+  const r = 8 + Math.sqrt(n.pages) * 2.6;
+  const dot = n.pages ? `<i style="--c:${ch.color};width:${r}px;height:${r}px"></i>` : `<i class="hollow" style="--c:${ch.color};width:10px;height:10px"></i>`;
+  const txt = n.pages
+    ? `Reading on record: <b>${n.pages} pages</b> of close reading in the dissertation (${esc(n.pageRange)}). On the timeline its mark grows with that count.`
+    : `Reading on record: <b>proposal only</b> (${esc(n.pageRange)}). No dissertation chapter; it is drawn dashed in the book and hollow on the timeline.`;
+  return `<div class="weight">${dot}<span>${txt}</span></div>`;
+}
+function openNovel(id, opts){
+  const n = novelById(id); if (!n) return;
+  const ch = chapterOf(n); const self = 'novel:' + n.id;
+  $('#dwTitle').textContent = n.title;
+  const rels = (n.relations || []).map(r => { const m = novelById(r.to); if (!m) return '';
+    return `<div class="rel"><a class="lk to" data-kind="novel" data-id="${m.id}">${esc(m.title)}</a><div class="why">${esc(r.why)} ${srcTag(r.src)}</div></div>`; }).join('');
+  $('#dwBody').innerHTML =
+    `<h5>Record</h5><p class="rec">${esc(n.author)} · ${n.year}<br>${esc(n.heb)}<br>${esc(n.publisher)}</p>
+     <span class="chip" data-ch="${n.chapter}" style="color:${ch.color};background:${ch.color}1a">${n.chapter === 'ep' ? 'EPILOGUE' : 'CHAPTER ' + ch.num} · ${esc(ch.title).toUpperCase()}${ch.years ? ' · ' + ch.years : ''}</span>
+     ${weightLine(n, ch)}
+     <h5>What happens</h5><p>${linkify(n.plot, self)}</p>${srcTag(n.plotSrc)}
+     ${n.quote ? `<blockquote>${esc(n.quote.text)}<cite>${esc(n.quote.cite)}</cite></blockquote>` : ''}
+     <h5>In the argument</h5><p>${linkify(n.argument, self)}</p>${srcTag(n.argumentSrc)}
+     <h5>Origins and sources</h5><p>${linkify(n.origins, self)}</p>${srcTag(n.originsSrc)}
+     <h5>Relations in the corpus</h5>${rels || '<p>No relation to another novel is stated in the dissertation or the proposal; the novel holds its chapter ring only.</p>'}
+     <h5>Legacy and public afterlife</h5><p>${linkify(n.legacy, self)}</p>${srcTag(n.legacySrc)}`;
+  $('.chip', $('#dwBody')).onclick = () => openChapter(n.chapter);
+  openDrawer();
+  markRead(id);
+  $$('.bk-nv').forEach(b => { b.classList.toggle('on', b.dataset.id === id); if (b.dataset.id === id) b.classList.add('seen'); });
+  if (!(opts && opts.silent)) Snd.open();
+  conLog(`opened ${n.title} (${n.year})`, true);
+  Scenes.focusNovel && Scenes.focusNovel(id);
+}
+function openChapter(key){
+  const ch = chapterByKey(key); if (!ch) return;
+  const self = 'chapter:' + (ch.num || 'ep');
+  const novels = ch.novels.map(novelById).filter(Boolean);
+  $('#dwTitle').textContent = (ch.num ? 'Chapter ' + ch.num + ' · ' : 'Epilogue · ') + fullTitle(ch);
+  $('#dwBody').innerHTML =
+    `<p class="rec" style="color:${ch.color}">${ch.years ? ch.years + ' · ' : ''}${novels.length} ${novels.length === 1 ? 'novel' : 'novels'}</p>
+     ${ch.titleNote ? `<h5>The title</h5><p>${ch.titleNote}</p>${srcTag(ch.titleNoteSrc)}` : ''}
+     <h5>Historical context</h5><p>${linkify(ch.context, self)}</p>${srcTag(ch.contextSrc)}
+     ${ch.threat ? `<h5>Threat imagined</h5><p>${linkify(ch.threat, self)}</p>${srcTag(ch.threatSrc)}` : ''}
+     <h5>The chapter's argument</h5><p>${linkify(ch.argument, self)}</p>${srcTag(ch.argumentSrc)}
+     <h5>The novels</h5><div>${novels.map(n => `<span class="tag" data-open="${n.id}" style="font-family:var(--serif);font-size:.98rem;letter-spacing:0;padding:.35rem .75rem;text-transform:none;border-color:${ch.color}66">${esc(n.title)} · ${n.year}</span>`).join('')}</div>
+     <h5>Public afterlife</h5><p>${linkify(ch.afterlife, self)}</p>${srcTag(ch.afterlifeSrc)}`;
+  $$('[data-open]', $('#dwBody')).forEach(t => t.onclick = () => openNovel(t.dataset.open));
+  openDrawer();
+  Snd.chapter();
+  conLog(`opened ${ch.num ? 'chapter ' + ch.num : 'the epilogue'}: ${fullTitle(ch)}`, true);
+  Scenes.focusChapter && Scenes.focusChapter(ch);
+}
+function openAnchor(id){
+  const a = ANCHORS[id]; if (!a) return;
+  $('#dwTitle').textContent = a.title;
+  $('#dwBody').innerHTML = `<p class="rec" style="color:var(--accent)">${a.kicker}</p>` + linkify(a.body, 'anchor:' + id);
+  openDrawer();
+  Snd.chapter();
+  conLog(`opened ${a.title}`, true);
+}
+function openDrawer(){ $('#drawer').classList.add('open'); document.body.classList.add('dw-open'); }
+function closeDrawer(){ $('#drawer').classList.remove('open'); document.body.classList.remove('dw-open'); $$('.bk-nv.on').forEach(b => b.classList.remove('on')); }
+$('#dwClose').onclick = () => { closeDrawer(); Snd.back(); Scenes.unfocus && Scenes.unfocus(); };
+/* the record opens below the top bar, so the bar's buttons stay reachable */
+function setTopbarHeight(){ const t = document.querySelector('.topbar'); if (t && t.offsetHeight) document.documentElement.style.setProperty('--tb', t.offsetHeight + 'px'); }
+window.addEventListener('resize', setTopbarHeight); setTopbarHeight();
+
+/* ---------- nav ---------- */
+const VIEWS = [
+  { id:'book', label:'Book' }, { id:'flow', label:'Flowchart' }, { id:'arc', label:'Timeline' },
+  { id:'chapters', label:'Chapters' }, { id:'corpus', label:'Corpus' }, { id:'sources', label:'Sources' }
+];
+let current = 'book';
+VIEWS.forEach((v, i) => {
+  const b = document.createElement('button'); b.className = 'nav-btn'; b.dataset.view = v.id;
+  b.innerHTML = `${v.label}<span class="k">${i + 1}</span>`; b.onclick = () => { Snd.click(); go(v.id); };
+  $('#nav').appendChild(b);
+});
+function go(id){
+  if (!VIEWS.some(v => v.id === id)) return;
+  current = id;
+  $$('.view').forEach(s => s.classList.remove('active'));
+  $$('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.view === id));
+  const sec = $('#v-' + id); sec.classList.add('active');
+  document.body.classList.add('gl-hidden');   /* the overture's background stays off inside the app */
+  window.scrollTo({ top:0, behavior: reduced ? 'auto' : 'smooth' });
+  $$('.stag', sec).forEach(el => el.classList.remove('in'));
+  requestAnimationFrame(() => { $$('.stag', sec).forEach((el, i) => { el.style.animationDelay = Math.min(i * 45, 700) + 'ms'; el.classList.add('in'); }); });
+  Scenes.onView(id);
+}
+const KBD = 'a.lk,[data-open],.chip,.ch-hd,.card,.ch-lbl,.spine-lbl,.bk-nv,.bk-an';
+function makeFocusable(root){ (root || document).querySelectorAll(KBD).forEach(el => { if (!el.hasAttribute('tabindex')) { el.tabIndex = 0; if (!el.getAttribute('role')) el.setAttribute('role', 'button'); } }); }
+if (window.MutationObserver) new MutationObserver(() => makeFocusable()).observe(document.body, { childList:true, subtree:true });
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches(KBD)) { e.preventDefault(); e.target.click(); return; }
+  if (e.target.tagName === 'INPUT') return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= VIEWS.length) go(VIEWS[n - 1].id);
+  if (e.key === 'Escape') { closeDrawer(); $('#console').classList.remove('open'); Scenes.unfocus && Scenes.unfocus(); }
+});
+$('#enterBtn').onclick = () => {
+  Snd.ensure(); Snd.click();
+  Scenes.shatterHero();
+  $('#overture').classList.add('gone');
+  setTimeout(() => { document.body.classList.add('in-app'); go('book'); setTopbarHeight(); }, reduced ? 0 : 620);
+};
+$('#homeBtn').onclick = () => { Snd.back(); document.body.classList.remove('in-app', 'gl-hidden'); $('#overture').classList.remove('gone'); Scenes.reformHero(); };
+$('#sndBtn').onclick = e => { const on = Snd.toggle(); e.currentTarget.classList.toggle('on', on); e.currentTarget.textContent = on ? 'Sound' : 'Muted'; };
+if (!Snd.on) { $('#sndBtn').classList.remove('on'); $('#sndBtn').textContent = 'Muted'; }
+$('#hcBtn').onclick = e => { document.body.classList.toggle('hc'); e.currentTarget.classList.toggle('on'); Snd.click(); };
+$('#prBtn').onclick = () => {
+  let fired = false; const mark = () => { fired = true; };
+  window.addEventListener('beforeprint', mark, { once:true });
+  try { window.print(); } catch(e) {}
+  setTimeout(() => { window.removeEventListener('beforeprint', mark);
+    if (!fired) toast('◈', 'PRINT BLOCKED HERE', 'Open the downloaded file in a browser tab to print'); }, 800);
+};
+
+/* ---------- counts shown in the page ---------- */
+$('#discTotal').textContent = '/' + CORPUS_N;
+$('#ovSub').textContent = cap(numWord(CORPUS_N)) + ' novels, ' + numWord(CHAPTER_N) + ' chapters and an epilogue, from 1984 on.';
+$('#corpusH2').textContent = cap(numWord(CORPUS_N)) + ' novels by ' + numWord(CORPUS_AUTHORS) + ' authors';
+
+/* ---------- view intros ---------- */
+$('#bookIntro').innerHTML = linkify(`Each chapter beside the novels it reads, from the Introduction to the Epilogue. Click a chapter or a novel to open its full record. A dashed box marks a novel with a proposal reading only.`);
+$('#flowIntro').innerHTML = linkify(`The Introduction to the Epilogue, in the order the book reads them. Click a chapter for its record or a novel for its own. Hover a novel to mark the novels it is related to. A dashed outline means a proposal reading only.`);
+$('#arcIntro').innerHTML = linkify(`The novels and the epilogue in order of publication, one lane per chapter. The book argues that four decades of Hebrew dystopias moved from warning to testimony: scenarios first dismissed as exaggeration became difficult to read as anything but description. At the midpoint, in 2004, a Palestinian citizen of Israel writing in Hebrew documented as a present condition what Jewish-Israeli fiction had imagined only as a future threat.`) + srcTag('V, Brief and Full Description');
+$('#chIntro').innerHTML = linkify(`Context, imagined threat, argument and afterlife for each chapter. Every title is a link.`);
+$('#corpusIntro').innerHTML = linkify(`Kobi Niv's epilogue novel sits outside the count. The last line of each card is the reading on record.`);
+$('#srcIntro').innerHTML = `Four texts supply every sentence in this app. Dissertation page numbers are as printed; a novel with only a proposal reading says so.`;
+
+/* ---------- book view: chapters and novels as text boxes (static) ---------- */
+(function book(){
+  const host = $('#bookWrap'); if (!host) return;
+  const firstSentence = html => { const p = (String(html).match(/<p>([\s\S]*?)<\/p>/) || [, html])[1].replace(/<(?!\/?i>)[^>]+>/g, '').trim();
+    const m = p.match(/^[\s\S]*?[.!?](?=\s|$)/); return m ? m[0] : p; };
+  const srcOf = html => { const m = String(html).match(/<span class="src">([\s\S]*?)<\/span>/); return m ? m[1] : ''; };
+  const band = f => { const d = document.createElement('div'); d.className = 'bk-band';
+    d.innerHTML = `<small>${esc(f.label)}</small><b>${esc(f.title)}</b>`; host.appendChild(d); };
+  band(FRAME.intro);
+  const frame = document.createElement('div'); frame.className = 'bk-frame';
+  ['herzl', 'leibowitz'].forEach(k => { const a = ANCHORS[k]; if (!a) return;
+    const el = document.createElement('article'); el.className = 'bk-an'; el.dataset.anchor = k;
+    el.innerHTML = `<small>${esc(a.kicker)}</small><b>${esc(a.title)}</b><p>${firstSentence(a.body)}</p>${srcTag(srcOf(a.body))}`;
+    el.onclick = () => openAnchor(k); frame.appendChild(el); });
+  host.appendChild(frame);
+  ALLCH.forEach(ch => {
+    if (!ch.num) band(FRAME.concl);
+    const key = ch.num || 'ep', self = 'chapter:' + key;
+    const novels = ch.novels.map(novelById).filter(Boolean);
+    const lede = ch.threat || ch.context, ledeSrc = ch.threat ? ch.threatSrc : ch.contextSrc;
+    const sec = document.createElement('section'); sec.className = 'bk-ch'; sec.style.setProperty('--c', ch.color);
+    sec.innerHTML =
+      `<div class="bk-side">
+         <button class="bk-hd" type="button"><span class="bk-num">${ch.num || 'E'}</span>
+           <span><span class="bk-kick">${ch.num ? 'Chapter ' + ch.num : 'Epilogue'}${ch.years ? ' · ' + ch.years : ''}</span>
+           <h3>${esc(ch.title)}</h3>${ch.sub ? `<span class="bk-sub">${esc(ch.sub)}</span>` : ''}</span></button>
+         <p class="bk-lede">${linkify(lede, self)}</p>${srcTag(ledeSrc)}
+         <button class="bk-go" type="button">Open the chapter record →</button>
+       </div>
+       <div class="bk-grid">${novels.map(n => {
+         const rel = (n.relations || []).map(r => novelById(r.to)).filter(Boolean);
+         return `<article class="bk-nv${n.pages ? '' : ' hollow'}" data-id="${n.id}" aria-label="${esc(n.title)}, ${esc(n.author)}, ${n.year}">
+           <div class="bk-top"><span class="bk-yr">${n.year} <span class="bk-seen">· opened</span></span><span class="bk-rd">${n.pages ? 'Dissertation · ' + n.pages + ' pp.' : 'Proposal reading'}</span></div>
+           <h4>${esc(n.title)}</h4>${n.heb && n.heb !== n.title ? `<div class="bk-heb">${esc(n.heb)}</div>` : ''}
+           <div class="bk-by">${esc(n.author)}</div><div class="bk-pub">${esc(n.publisher)}</div>
+           <p>${esc(n.short)}</p>
+           ${rel.length ? `<div class="bk-rel"><div><em>Related</em>${rel.map(m => `<a class="lk" data-kind="novel" data-id="${m.id}">${esc(m.title)}</a>`).join(', ')}</div></div>` : ''}
+         </article>`; }).join('')}</div>`;
+    $('.bk-hd', sec).onclick = () => openChapter(key);
+    $('.bk-go', sec).onclick = () => openChapter(key);
+    $$('.bk-nv', sec).forEach(b => b.onclick = e => { if (e.target.closest('a.lk')) return; openNovel(b.dataset.id); });
+    host.appendChild(sec);
+  });
+})();
+
+/* ---------- flowchart (static: no animation, no camera) ---------- */
+(function flowchart(){
+  const host = $('#flowChart'); if (!host) return;
+  const rail = document.createElement('div'); rail.className = 'fl-rail';
+  rail.innerHTML = '<span><b>1984</b> · warning</span><span>testimony</span>'; host.appendChild(rail);
+  const rev = {};
+  NOVELS.forEach(n => (n.relations || []).forEach(r => { (rev[r.to] = rev[r.to] || []).push(n.id); }));
+  const related = id => { const n = novelById(id); return new Set([...(n && n.relations || []).map(r => r.to), ...(rev[id] || [])]); };
+  const frameRow = f => { const r = document.createElement('div'); r.className = 'fl-row fl-frame'; r.style.setProperty('--c', 'var(--accent)');
+    r.innerHTML = `<div class="fl-ch"><span class="n">${f.label.charAt(0)}</span><span><b>${esc(f.title)}</b><small>${f.label.toUpperCase()}</small></span></div>`;
+    host.appendChild(r); };
+  const plainArrow = () => { const a = document.createElement('div'); a.className = 'fl-arrow'; a.innerHTML = '<i></i><em></em>'; host.appendChild(a); };
+  frameRow(FRAME.intro); plainArrow();
+  ALLCH.forEach((ch, i) => {
+    const novels = ch.novels.map(novelById).filter(Boolean);
+    if (!ch.num) { plainArrow(); frameRow(FRAME.concl); }
+    if (i) { const p = ALLCH[i - 1];
+      const lab = ch.num ? (p.y1 === ch.y0 ? String(p.y1) : p.y1 + ' → ' + ch.y0) : 'after ' + p.y1;
+      const ar = document.createElement('div'); ar.className = 'fl-arrow'; ar.innerHTML = `<i></i><em>${lab}</em>`; host.appendChild(ar); }
+    const row = document.createElement('div'); row.className = 'fl-row'; row.style.setProperty('--c', ch.color);
+    row.innerHTML =
+      `<button class="fl-ch" type="button"><span class="n">${ch.num || 'E'}</span><span><b>${esc(ch.title)}</b>${ch.sub ? `<span class="sub">${esc(ch.sub)}</span>` : ''}<small>${ch.num ? 'CHAPTER ' + ch.num : 'EPILOGUE'}${ch.years ? ' · ' + ch.years : ''}</small></span></button>
+       <div class="fl-br"></div>
+       <div class="fl-nv">${novels.map(n => `<button type="button" data-id="${n.id}"${n.pages ? '' : ' class="hollow"'}>${esc(n.title)} · ${n.year}</button>`).join('')}</div>`;
+    $('.fl-ch', row).onclick = () => { Snd.click(); openChapter(ch.num || 'ep'); };
+    $$('.fl-nv button', row).forEach(b => b.onclick = () => { Snd.click(); openNovel(b.dataset.id, { silent:true }); });
+    host.appendChild(row);
+  });
+  function mark(id){ const rel = id ? related(id) : new Set();
+    $$('.fl-nv button', host).forEach(b => { b.classList.toggle('on', b.dataset.id === id); b.classList.toggle('rel', rel.has(b.dataset.id)); }); }
+  host.addEventListener('mouseover', e => { const b = e.target.closest('.fl-nv button'); if (b) mark(b.dataset.id); });
+  host.addEventListener('mouseout', e => { if (e.target.closest('.fl-nv button')) mark(null); });
+  host.addEventListener('focusin', e => { const b = e.target.closest('.fl-nv button'); if (b) mark(b.dataset.id); });
+  host.addEventListener('focusout', () => mark(null));
+})();
+
+/* ---------- chapters view ---------- */
+(function chapters(){
+  const host = $('#chList');
+  const frameCard = f => { const d = document.createElement('div'); d.className = 'ch stag ch-frame';
+    d.innerHTML = `<div class="ch-hd"><div class="ch-n" style="background:rgba(230,197,71,.13);color:var(--accent)">${f.label.charAt(0)}</div>
+      <div class="ch-t"><b style="color:var(--accent)">${esc(f.title)}</b><small>${f.label.toUpperCase()}</small></div></div>`;
+    host.appendChild(d); };
+  frameCard(FRAME.intro);
+  ALLCH.forEach((ch, i) => {
+    if (!ch.num) frameCard(FRAME.concl);
+    const d = document.createElement('div'); d.className = 'ch stag';
+    const self = 'chapter:' + (ch.num || 'ep');
+    const novels = ch.novels.map(novelById).filter(Boolean);
+    d.innerHTML =
+      `<div class="ch-hd"><div class="ch-n" style="background:${ch.color}22;color:${ch.color}">${ch.num || 'E'}</div>
+        <div class="ch-t"><b style="color:${ch.color}">${esc(ch.title)}</b>${ch.sub ? `<span class="sub">${esc(ch.sub)}</span>` : ''}<small>${ch.num ? 'CHAPTER ' + ch.num : 'EPILOGUE'}${ch.years ? ' · ' + ch.years : ''} · ${novels.map(n => n.surname).join(', ')}</small></div><div class="ch-x">▾</div></div>
+       <div class="ch-bd"><div class="ch-in">
+         ${ch.titleNote ? `<h5>The title</h5><p>${ch.titleNote}</p>${srcTag(ch.titleNoteSrc)}` : ''}
+         <h5>Historical context</h5><p>${linkify(ch.context, self)}</p>${srcTag(ch.contextSrc)}
+         ${ch.threat ? `<h5>Threat imagined</h5><p>${linkify(ch.threat, self)}</p>${srcTag(ch.threatSrc)}` : ''}
+         <h5>The argument</h5><p>${linkify(ch.argument, self)}</p>${srcTag(ch.argumentSrc)}
+         <h5>The novels</h5><div class="novels">${novels.map(n => `<span class="tag" data-open="${n.id}" style="border-color:${ch.color}66">${esc(n.title)} · ${n.year}</span>`).join('')}</div>
+         <h5>Public afterlife</h5><p>${linkify(ch.afterlife, self)}</p>${srcTag(ch.afterlifeSrc)}
+       </div></div>`;
+    $('.ch-hd', d).onclick = () => { d.classList.toggle('open'); Snd.click(); };
+    $$('[data-open]', d).forEach(t => t.onclick = e => { e.stopPropagation(); openNovel(t.dataset.open); });
+    host.appendChild(d);
+    if (i === 0) d.classList.add('open');
+  });
+})();
+
+/* ---------- corpus view ---------- */
+(function corpus(){
+  const host = $('#corpusGrid');
+  NOVELS.forEach(n => {
+    const ch = chapterOf(n);
+    const c = document.createElement('div'); c.className = 'card stag'; c.style.setProperty('--accent', ch.color);
+    c.innerHTML =
+      `<h4>${esc(n.title)}</h4>
+       <div class="meta" style="color:${ch.color}">${esc(n.author)} · ${n.year} · ${n.chapter === 'ep' ? 'Epilogue' : 'Chapter ' + ch.num}</div>
+       <p>${esc(n.short)}</p>
+       <div class="weight">${n.pages ? `Reading on record · ${n.pages} pp. in the dissertation` : 'Reading on record · proposal only'}</div>`;
+    c.onclick = () => openNovel(n.id);
+    host.appendChild(c);
+  });
+})();
+
+/* ---------- sources view ---------- */
+(function sources(){
+  const w = $('#srcWrap');
+  w.innerHTML = SOURCES.map(s => `<div class="srcrow"><div><b>${s.key} · ${esc(s.name)}</b><span class="m">${esc(s.meta)}</span></div><div>${esc(s.took)}</div></div>`).join('')
+    + `<h5 style="font-family:var(--mono);font-size:.56rem;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin:1.6rem 0 .4rem">Per novel · where the reading sits</h5>`
+    + NOVELS.map(n => `<div class="srcrow"><div><b><a class="lk" data-kind="novel" data-id="${n.id}">${esc(n.title)}</a></b><span class="m">${esc(n.author)} · ${n.year}</span></div><div>${esc(n.pageRange)}${n.pages ? '' : ' · no dissertation chapter'}</div></div>`).join('')
+    + `<p style="font-size:.8rem;color:var(--muted);margin:1.2rem 0 0;line-height:1.6">Quotations from the novels are reproduced as the dissertation quotes them, with the dissertation's page. Elisions are marked […]. Nothing in this app quotes a novel that the dissertation does not quote.</p>`;
+})();
+
+/* ---------- console ---------- */
+const conBody = $('#conBody');
+function conLog(text, isUser){
+  const d = document.createElement('div'); d.className = 'con-line';
+  d.innerHTML = isUser ? `<span class="u">›</span> ${esc(text)}` : '';
+  conBody.appendChild(d); conBody.scrollTop = conBody.scrollHeight;
+  if (isUser) return;
+  if (reduced) { d.textContent = text; return; }
+  let i = 0; (function tick(){ d.textContent = text.slice(0, ++i); conBody.scrollTop = conBody.scrollHeight; if (i < text.length) setTimeout(tick, 9); })();
+}
+function answer(qRaw){
+  const q = qRaw.toLowerCase().trim();
+  if (!q) return 'Ask about a novel, an author, a year, a chapter, or Leibowitz.';
+  const n = NOVELS.find(x => q.includes(x.title.toLowerCase()) || q.includes(x.surname.toLowerCase()));
+  if (n) { const c = chapterOf(n); setTimeout(() => openNovel(n.id, { silent:true }), 300);
+    return `${n.title} · ${n.author} · ${n.year}. ${n.short} Filed under ${n.chapter === 'ep' ? 'the Epilogue' : 'Chapter ' + c.num + ', ' + fullTitle(c)}. Record opened.`; }
+  if (q.includes('introduction') || /\bintro\b/.test(q)) return `Introduction: ${FRAME.intro.title}.`;
+  if (q.includes('conclusion')) return `Conclusion: ${FRAME.concl.title}.`;
+  if (q.includes('big brother') || q.includes('shin bet')) { setTimeout(() => openChapter(6), 300); return `Chapter 6, ${fullTitle(CHAPTERS[5])}. ${CHAPTERS[5].context.replace(/<[^>]+>/g, '')} Record opened.`; }
+  if (q.includes('falah')) { setTimeout(() => openChapter(4), 300); return CHAPTERS[3].titleNote + ' Record opened.'; }
+  const ch = ALLCH.find(c => q.includes(plainT(c.title)) || (c.sub && q.includes(plainT(c.sub))) || (c.num && q.includes('chapter ' + c.num)));
+  if (ch) { setTimeout(() => openChapter(ch.num || 'ep'), 300); return `${fullTitle(ch)}${ch.years ? ' (' + ch.years + ')' : ''}. ${ch.context.replace(/<[^>]+>/g, '')} Record opened.`; }
+  if (q.includes('leibowitz') || q.includes('spine')) { setTimeout(() => openAnchor('leibowitz'), 300); return 'Leibowitz, 1968: rule over the Palestinians would necessarily turn Israel into a secret-police state. Record opened.'; }
+  if (q.includes('herzl') || q.includes('altneuland') || q.includes('geyer')) { setTimeout(() => openAnchor('herzl'), 300); return "Herzl's Altneuland, 1902: the founding utopia, with Dr. Geyer's campaign as its own internal warning. Record opened."; }
+  if (q.includes('gaza') || q.includes('epilogue')) { setTimeout(() => openChapter('ep'), 300); return 'Facing Gaza: the epilogue asks whether the warnings these novels issued over four decades were ultimately heard. Record opened.'; }
+  const yr = (q.match(/\b(19|20)\d{2}\b/) || [])[0];
+  if (yr) { const hits = NOVELS.filter(x => String(x.year) === yr);
+    if (hits.length) return `${yr}: ` + hits.map(x => `${x.title} (${x.author})`).join('; ') + '.';
+    const c = CHAPTERS.find(c => +yr >= c.y0 && +yr <= c.y1);
+    if (c) return `${yr} falls inside Chapter ${c.num}, ${fullTitle(c)} (${c.years}).`;
+    return `No corpus novel is dated ${yr}. The corpus runs from 1984 on.`; }
+  if (q.includes('size') || q.includes('big') || q.includes('small')) return 'On the timeline, a mark\'s size follows the pages of close reading the dissertation gives a novel. Kenan (30), Sarna (31), Sarid (20), Kashua (13 and 13), Bernstein (4), Human Parts (1). Hollow marks and dashed boxes have a proposal reading only.';
+  if (q.includes('thesis') || q.includes('argument')) return 'A four-decade sequence of Hebrew dystopias moved from warning to testimony; the state, once the solution, becomes the source of danger.';
+  if (q.includes('count') || q.includes('how many')) return cap(numWord(CORPUS_N)) + ' novels by ' + numWord(CORPUS_AUTHORS) + ' authors across ' + numWord(CHAPTER_N) + ' chapters, plus an epilogue novel that sits outside the count.';
+  if (q.includes('gottlieb') || q.includes('booker') || q.includes('third type')) return 'The dissertation sets Gottlieb and Booker\'s models, dystopias written in the West and under communist totalitarianism, beside a third type: an ethnic democracy that anticipates its transformation into a totalitarian state (D, pp. 55–56).';
+  return 'No match. Try a title, an author, a year between 1984 and 2021, a chapter name, or Leibowitz.';
+}
+function runCon(){ const v = $('#conInput').value; if (!v.trim()) return; Snd.click(); conLog(v, true); $('#conInput').value = ''; setTimeout(() => conLog(answer(v)), 180); }
+$('#conSend').onclick = runCon;
+$('#conInput').addEventListener('keydown', e => { if (e.key === 'Enter') runCon(); });
+$('#conBtn').onclick = () => { Snd.click(); $('#console').classList.toggle('open'); $('#conInput').focus(); };
+$('#conClose').onclick = () => { $('#console').classList.remove('open'); Snd.back(); };
+conLog('Reading console ready. ' + cap(numWord(CORPUS_N)) + ' novels, ' + numWord(CHAPTER_N) + ' chapters, one epilogue.');
+
+/* ============================================================
+   SCENES · timeline (2D)
+   ============================================================ */
+const Scenes = (function(){
+  const HAS_WEBGL = false;   /* no WebGL scene remains; the timeline is 2D */
+
+  function overlayFor(sceneEl){
+    let o = sceneEl.querySelector('canvas.ovl');
+    if (!o) { o = document.createElement('canvas'); o.className = 'ovl';
+      o.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5'; sceneEl.appendChild(o); }
+    return o;
+  }
+  function gutterWidth(W){ return W < 600 ? Math.max(180, W * 0.32) : Math.max(255, Math.min(370, W * 0.32)); }
+  /* shrink a chapter title until it fits its gutter instead of cutting it off */
+  function fitTitle(el, key){ if (!el.offsetParent || el._fit === key) return; const b = el.querySelector('b'); if (!b) return;
+    b.style.fontSize = ''; let fs = parseFloat(getComputedStyle(b).fontSize);
+    while (b.scrollWidth > b.clientWidth + 1 && fs > 12) { fs -= 1; b.style.fontSize = fs + 'px'; }
+    el._fit = key; }
+  /* how far to pull a camera back so a scene drawn for a wide frame still fits a narrow one */
+  function fitFor(el){ const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return 1; const a = r.width / r.height; el.classList.toggle('narrow', r.width < 900); return Math.max(1, 1.9 / a); }
+
+  /* DOM chapter labels in a left gutter, with leader lines on the overlay canvas.
+     Labels are real elements: readable, ranked, and clickable. */
+  function makeLabelLayer(layerEl, sceneEl, onClick, onHover){
+    const items = ALLCH.map(ch => {
+      const el = document.createElement('div');
+      el.className = 'ch-lbl' + (ch.num ? '' : ' ep');
+      el.style.setProperty('--c', ch.color);
+      el.innerHTML = `<b>${esc(ch.title)}</b><small>${ch.num ? 'CH ' + ch.num + ' <em>·</em> ' + ch.years : 'EPILOGUE'}</small>`;
+      el.onclick = e => { e.stopPropagation(); onClick(ch); };
+      el.onmouseenter = () => { Snd.tick(); onHover && onHover(ch); };
+      el.onmouseleave = () => { onHover && onHover(null); };
+      layerEl.appendChild(el);
+      return { ch, el, ax:0, ay:0, ly:0, visible:false };
+    });
+    const spine = document.createElement('div'); spine.className = 'spine-lbl'; spine.textContent = 'Leibowitz 1968 · the spine';
+    spine.onclick = e => { e.stopPropagation(); openAnchor('leibowitz'); }; spine.onmouseenter = () => Snd.tick();
+    layerEl.appendChild(spine);
+    function place(W, H, octx, activeCh, spinePt){
+      const G = gutterWidth(W); layerEl.style.setProperty('--gw', G + 'px');
+      const fitKey = G + (sceneEl.classList.contains('narrow') ? 'n' : 'w'); items.forEach(r => fitTitle(r.el, fitKey));
+      const SP = Math.max(50, Math.min(60, H / 8));
+      const rows = items.filter(r => r.visible).sort((a, b) => a.ay - b.ay);
+      let last = -99;
+      rows.forEach(r => { let y = clamp(r.ay, 24, H - 26); if (y - last < SP) y = last + SP; r.ly = y; last = y; });
+      const over = last - (H - 26); if (over > 0) rows.forEach(r => { r.ly -= over; });
+      items.forEach(r => { r.el.style.display = r.visible ? '' : 'none'; });
+      rows.forEach(r => {
+        r.el.style.top = r.ly + 'px';
+        r.el.classList.toggle('active', activeCh === r.ch);
+        r.el.classList.toggle('dim', !!activeCh && activeCh !== r.ch);
+        if (octx && r.ax > G) {
+          const w = Math.min(r.el.offsetWidth, G - 20);
+          octx.globalAlpha = activeCh === r.ch ? .75 : (activeCh ? .12 : .28);
+          octx.strokeStyle = r.ch.color; octx.lineWidth = 1;
+          octx.beginPath(); octx.moveTo(14 + w + 4, r.ly); octx.lineTo(G - 6, r.ly); octx.lineTo(r.ax, r.ay); octx.stroke();
+          octx.globalAlpha = activeCh === r.ch ? .95 : .4;
+          octx.beginPath(); octx.arc(r.ax, r.ay, 2.6, 0, 7); octx.fillStyle = r.ch.color; octx.fill();
+        }
+      });
+      if (octx) octx.globalAlpha = 1;
+      if (spinePt) { spine.style.display = ''; spine.style.left = clamp(spinePt.x, G + 70, W - 70) + 'px'; spine.style.top = clamp(spinePt.y, 14, H - 14) + 'px'; }
+      else spine.style.display = 'none';
+    }
+    return { items, place };
+  }
+
+  /* ================= HERO (background) ================= */
+  function fallbackNote(el){
+    const d = document.createElement('div');
+    d.style.cssText = 'position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:2rem;color:var(--text-2);font-family:var(--mono);font-size:.75rem;line-height:1.9';
+    d.innerHTML = 'This scene needs WebGL, which this browser did not provide.<br>Every record in it is also in Timeline, Chapters and Corpus.';
+    el.appendChild(d);
+  }
+
+  /* ================= TIMELINE (2D) ================= */
+  let arc = null;
+  function initArc(){
+    const canvas = document.getElementById('arcCanvas'), ctx = canvas.getContext('2d');
+    const hover = document.getElementById('arcHover'), layer = document.getElementById('arcLabels');
+    const Y0 = 1984, Y1 = 2024;
+    let T0 = 0, running = false, mx = -1, my = -1, marks = [], hoveredIdx = -1, lastHover = -1;
+    const items = NOVELS.map(n => ({ n, ch:chapterOf(n) }))
+      .concat([{ n:{ title:EPILOGUE.title, author:'', year:2023, id:null, chapter:'ep' }, ch:EPILOGUE, isEp:true }])
+      .sort((a, b) => a.n.year - b.n.year);
+    const LANES = ALLCH;
+    const laneEls = LANES.map(ch => { const el = document.createElement('div'); el.className = 'ch-lbl' + (ch.num ? '' : ' ep'); el.style.setProperty('--c', ch.color); el.style.left = '8px';
+      el.innerHTML = `<b>${esc(ch.title)}</b><small>${ch.num ? 'CH ' + ch.num + ' <em>·</em> ' + ch.years : 'EPILOGUE'}</small>`;
+      el.onclick = e => { e.stopPropagation(); Snd.chapter(); openChapter(ch.num || 'ep'); }; el.onmouseenter = () => Snd.tick(); layer.appendChild(el); return el; });
+    canvas.addEventListener('pointermove', e => { mx = e.offsetX; my = e.offsetY; });
+    canvas.addEventListener('pointerleave', () => { mx = my = -1; hover.classList.remove('show'); hoveredIdx = -1; });
+    canvas.addEventListener('click', () => { if (hoveredIdx >= 0) { const it = items[hoveredIdx]; Snd.click(); if (it.n.id) openNovel(it.n.id, { silent:true }); else openChapter('ep'); } });
+    document.getElementById('arcReplay').onclick = () => { Snd.click(); T0 = performance.now(); };
+    function draw(now){
+      const r = canvas.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(r.width*d)) { canvas.width = Math.round(r.width*d); canvas.height = Math.round(r.height*d); }
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+      const W = r.width, H = r.height, padL = W > 1000 ? 300 : (W > 780 ? 250 : 62), padR = 34, base = H - 40, top = 30;
+      layer.style.setProperty('--gw', padL + 'px');
+      ctx.clearRect(0, 0, W, H);
+      const X = y => padL + ((y - Y0) / (Y1 - Y0)) * (W - padL - padR);
+      const laneH = (base - top) / LANES.length, laneY = i => top + laneH * (i + .5);
+      const p = reduced ? 1 : clamp((now - T0) / 1900, 0, 1);
+      LANES.forEach((ch, i) => { const y = laneY(i);
+        ctx.strokeStyle = ch.color + '22'; ctx.lineWidth = 1; ctx.setLineDash([2,5]); ctx.beginPath(); ctx.moveTo(padL - 8, y); ctx.lineTo(W - padR, y); ctx.stroke(); ctx.setLineDash([]);
+        const a = X(Math.max(ch.y0, Y0)), b = X(Math.min(ch.y1, Y1)); ctx.fillStyle = ch.color + '18'; ctx.fillRect(a, y - laneH * .40, Math.max(b - a, 4), laneH * .80);
+        const el = laneEls[i]; el.style.top = y + 'px'; el.style.display = padL > 100 ? '' : 'none'; fitTitle(el, padL); });
+      ctx.strokeStyle = 'rgba(255,255,255,.14)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, base + 6); ctx.lineTo(W - padR, base + 6); ctx.stroke();
+      ctx.font = '12px "JetBrains Mono", monospace'; ctx.fillStyle = 'rgba(255,255,255,.5)';
+      for (let y = 1985; y <= 2024; y += 5) ctx.fillText(String(y), X(y) - 12, base + 22);
+      ctx.strokeStyle = 'rgba(230,197,71,.36)'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(X(1984), top - 8); ctx.lineTo(X(1984), base + 6); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(230,197,71,.85)'; ctx.font = '600 12px "JetBrains Mono", monospace'; ctx.fillText('1984', X(1984) - 4, top - 13);
+      marks = []; const slot = {};
+      const EP_LANE = LANES.length - 1;
+      const laneOf = o => (o.isEp || o.n.chapter === 'ep') ? EP_LANE : LANES.findIndex(c => c.num === o.n.chapter);
+      items.forEach((it, i) => {
+        const li = laneOf(it); if (li < 0) return;
+        const t = clamp((p * items.length - i) / 1.15, 0, 1), e = t < 1 ? 1 - Math.pow(1 - t, 3) : 1; if (e <= 0) return;
+        const key = li + ':' + it.n.year, k = (slot[key] = (slot[key] || 0) + 1) - 1;
+        const x = X(it.n.year) + (k ? (k % 2 ? 18 : -18) : 0);
+        const bob = 0;
+        const y = laneY(li) + (k ? (k % 2 ? -17 : 17) : 0) + bob;
+        const R = (it.isEp ? 11 : 9 + Math.sqrt(it.n.pages || 0) * 1.1) * e;
+        marks.push({ x, y, r:R, i });
+        ctx.beginPath(); ctx.arc(x, y, R + 5, 0, 7); ctx.fillStyle = it.ch.color + '1e'; ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.globalAlpha = e;
+        if (it.isEp || !it.n.pages) { ctx.strokeStyle = it.ch.color; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = it.ch.color + '33'; ctx.fill(); } else { ctx.fillStyle = it.ch.color; ctx.fill(); }
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = (it.isEp || !it.n.pages) ? it.ch.color : 'rgba(9,9,13,.92)'; ctx.font = '700 10px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
+        ctx.fillText(it.isEp ? 'E' : String(it.n.year).slice(2), x, y + 3); ctx.textAlign = 'left';
+        const nxt = items.find((o, j) => j > i && laneOf(o) === li && o.n.year > it.n.year);
+        const prv = items.filter((o, j) => j < i && laneOf(o) === li && o.n.year < it.n.year).pop();
+        const roomR = (nxt ? X(nxt.n.year) - 18 : W - padR - 4) - (x + R + 7), roomL = (x - R - 7) - (prv ? X(prv.n.year) + 18 : padL + 2);
+        ctx.font = '600 16px "Cormorant Garamond", Georgia, serif'; ctx.globalAlpha = .88 * e; ctx.fillStyle = it.ch.color;
+        const ell = (s, max) => { if (ctx.measureText(s).width <= max) return s; let t2 = s; while (t2.length > 1 && ctx.measureText(t2 + '…').width > max) t2 = t2.slice(0, -1); return t2 + '…'; };
+        if (roomR > 70) ctx.fillText(ell(it.n.title, roomR), x + R + 7, y + 4);
+        else if (roomL > 70) { ctx.textAlign = 'right'; ctx.fillText(ell(it.n.title, roomL), x - R - 7, y + 4); ctx.textAlign = 'left'; }
+        ctx.globalAlpha = 1;
+      });
+      hoveredIdx = -1;
+      if (mx >= 0) { for (const m of marks) if ((mx-m.x)*(mx-m.x) + (my-m.y)*(my-m.y) < (m.r+5)*(m.r+5)) { hoveredIdx = m.i; break; }
+        if (hoveredIdx >= 0) { const it = items[hoveredIdx]; if (hoveredIdx !== lastHover) Snd.tick();
+          hover.innerHTML = '<b>' + esc(it.n.title) + '</b><i>' + (it.isEp ? 'Epilogue' : esc(it.n.author) + ' · ' + it.n.year) + '</i><span>' + esc(it.isEp ? EPILOGUE.argument.replace(/<[^>]+>/g, '') : it.n.short) + '</span>';
+          hover.classList.add('show'); hover.style.left = clamp(mx + 16, 8, W - 356) + 'px'; hover.style.top = clamp(my + 14, 8, H - 140) + 'px'; canvas.style.cursor = 'pointer'; }
+        else { hover.classList.remove('show'); canvas.style.cursor = 'default'; } }
+      lastHover = hoveredIdx;
+    }
+    (function loop(now){ requestAnimationFrame(loop); if (document.hidden || !running) return; draw(now || performance.now()); })();
+    arc = { start(){ running = true; T0 = performance.now(); }, stop(){ running = false; } };
+  }
+
+  function onView(id){ arc && (id === 'arc' ? arc.start() : arc.stop()); }
+  function init(){ initArc(); }
+  return { init, onView, shatterHero(){}, reformHero(){}, HAS_WEBGL,
+    focusChapter(){}, focusNovel(){}, unfocus(){}, screenOf(){ return null; } };
+})();
+
+Scenes.init();
+go('book');
+window.UU = { openNovel, openChapter, openAnchor, go, NOVELS, CHAPTERS, screenOf:id => Scenes.screenOf(id) };
+})();
+</script>
+</body>
+</html>
